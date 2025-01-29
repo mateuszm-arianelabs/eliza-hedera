@@ -5,6 +5,7 @@ import { balanceHtsAction } from "./actions/balance-hts/balance-hts.ts";
 import { balancesAllTokensAction } from "./actions/balances-all-tokens/balance-all-tokens.ts";
 import { transferAction } from "./actions/transfer/transfer.ts";
 import { createTokenAction } from "./actions/create-token/create-token.ts";
+import {associateTokenAction} from "./actions/associate-token/associate-token.ts";
 
 export const hederaPlugin: Plugin = {
     name: "Hedera",
@@ -12,7 +13,7 @@ export const hederaPlugin: Plugin = {
     providers: [hederaClientProvider],
     evaluators: [],
     services: [],
-    actions: [balanceHbarAction, balanceHtsAction, balancesAllTokensAction, transferAction, createTokenAction],
+    actions: [balanceHbarAction, balanceHtsAction, balancesAllTokensAction, transferAction, createTokenAction, associateTokenAction],
 };
 
 export default hederaPlugin;
