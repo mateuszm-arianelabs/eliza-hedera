@@ -6,6 +6,7 @@ import { balancesAllTokensAction } from "./actions/balances-all-tokens/balance-a
 import { transferAction } from "./actions/transfer/transfer.ts";
 import { createTokenAction } from "./actions/create-token/create-token.ts";
 import { rejectTokenAction } from "./actions/reject-token/reject-token.ts";
+import { tokenHoldersAction } from "./actions/token-holders/token-holders.ts";
 
 export const hederaPlugin: Plugin = {
     name: "Hedera",
@@ -20,6 +21,7 @@ export const hederaPlugin: Plugin = {
         transferAction,
         createTokenAction,
         rejectTokenAction,
+        tokenHoldersAction,
     ],
 };
 
