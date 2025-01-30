@@ -110,7 +110,7 @@ export const rejectTokenAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "I don't want to accept the token {{0.0.542086}} form airdrop. Reject it.",
+                    text: "I don't want to accept the token {{0.0.542086}} from airdrop. Reject it.",
                     action: "HEDERA_REJECT_TOKEN",
                 },
             },
