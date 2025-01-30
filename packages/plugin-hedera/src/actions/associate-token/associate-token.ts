@@ -10,7 +10,6 @@ import {
 } from "@elizaos/core";
 
 import { HederaProvider } from "../../providers/client";
-import { HederaNetworkType } from "hedera-agent-kit/dist/types";
 import { HederaAssociateTokenParams } from "./types.ts";
 import { hederaAssociateTokenParamsSchema } from "./schema.ts";
 import { AssociateTokenActionService } from "./service/associate-token-action-service.ts";
@@ -55,11 +54,7 @@ export const associateTokenAction = {
 
             const action = new AssociateTokenActionService(hederaProvider);
 
-            const networkType = runtime.getSetting(
-                "HEDERA_NETWORK_TYPE"
-            ) as HederaNetworkType;
-
-            const response = await action.execute(paramOptions, networkType);
+            const response = await action.execute(paramOptions);
 
             if (_callback && response.status === "SUCCESS") {
                 await _callback({
