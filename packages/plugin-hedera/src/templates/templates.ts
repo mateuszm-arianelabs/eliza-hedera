@@ -99,3 +99,32 @@ Example response for the input: "Show me your token balances", assuming that in 
 
 Now respond with a JSON markdown block containing only the extracted values.
 `;
+
+export const rejectTokenTemplate = `Given the recent messages and wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+Extract the following information about rejecting token request:
+1. **Token id**:
+   - must be a string. Do not include dot after last character. Example of correct token id: "0.0.539314".
+
+Always look at the latest message from user and try to extract data from it!
+Respond with a JSON markdown block containing only the extracted values. All fields are rquired:
+\`\`\`json
+{
+    "tokenId": string   // Id of the token to reject
+\`\`\`
+
+Example response for the input: "Reject token 0.0.5445349.", the response should be:
+\`\`\`json
+{
+    "tokenId": "0.0.5445349"
+\`\`\`
+
+Example response for the input: "Reject received airdrop of token 0.0.539314.", the response should be:
+\`\`\`json
+{
+    "tokenId": "0.0.539314"
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;
