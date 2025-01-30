@@ -5,8 +5,10 @@ import { balanceHtsAction } from "./actions/balance-hts/balance-hts.ts";
 import { balancesAllTokensAction } from "./actions/balances-all-tokens/balance-all-tokens.ts";
 import { transferAction } from "./actions/transfer/transfer.ts";
 import { createTokenAction } from "./actions/create-token/create-token.ts";
-import { rejectTokenAction } from "./actions/reject-token/reject-token.ts";
+import { associateTokenAction } from "./actions/associate-token/associate-token.ts";
 import { tokenHoldersAction } from "./actions/token-holders/token-holders.ts";
+import { airdropTokenAction } from "./actions/airdrop-token/airdrop-token.ts";
+import { rejectTokenAction } from "./actions/reject-token/reject-token.ts";
 
 export const hederaPlugin: Plugin = {
     name: "Hedera",
@@ -20,8 +22,10 @@ export const hederaPlugin: Plugin = {
         balancesAllTokensAction,
         transferAction,
         createTokenAction,
-        rejectTokenAction,
         tokenHoldersAction,
+        associateTokenAction,
+        airdropTokenAction,
+        rejectTokenAction,
     ],
 };
 

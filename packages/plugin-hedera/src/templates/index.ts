@@ -70,4 +70,42 @@ Example reponse for the input: "Create new token with name MyToken with symbol M
 \`\`\`
 
 Now respond with a JSON markdown block containing only the extracted values.
-`
+`;
+
+export const hederaAirdropTokenTemplate = `Given the recent messages and hedera wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+Extract the following information about the token airdrop in hedera:
+1. **Token id**:
+   - Extract id of the token to airdrop.
+   - The value must be a string representing id of token.
+
+2. **Recipients**:
+   - Extract recipients as array of strings.
+   - Each element of array must be a string which represent accountId of recipient.
+
+3. **Amount**:
+   - Extract value of token to send to recipients.
+   - The value must be number, represent amount of tokens to send.
+
+Respond with a JSON markdown block containing only the extracted values.
+All fields are required, recipients array should have minimum one accountId(string):
+\`\`\`json
+{
+    "tokenId": string, // TokenId to airdrop
+    "recipients": string[], // Recipients is array of accountIds(string)
+    "amount": number // Token amount to send to recipients.
+}
+\`\`\`
+
+Example reponse for the input: "Airdrop 5.5 tokens 0.0.5425085 for 0.0.5398121, 0.0.5393967, 0.0.5395127", the response should be:
+\`\`\`json
+{
+    "tokenId": "0.0.5425085",
+    "recipients": ["0.0.5398121", "0.0.5393967", "0.0.5395127"],
+    "amount": 5.5
+}
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;

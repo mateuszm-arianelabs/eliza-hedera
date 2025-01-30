@@ -129,6 +129,34 @@ Example response for the input: "Reject received airdrop of token 0.0.539314.", 
 Now respond with a JSON markdown block containing only the extracted values.
 `;
 
+export const associateTokenTemplate = `Given the recent messages and wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+Extract the following information about associating tokens with account:
+1. **Token id**
+    - Must be a string Do not include dot after last character. Example of correct tokenId: "0.0.5422268".
+
+Respond with a JSON markdown block containing only the extracted values. All fields are required:
+\`\`\`json
+{
+    "tokenId": string,   // The tokenId address. Required
+\`\`\`
+
+Example response for the input: "Associate your wallet with token 0.0.5422268", the response should be:
+\`\`\`json
+{
+    "tokenId": "0.0.5422268"
+\`\`\`
+
+Example response for the input: "Associate wallet with token 0.0.5422333", the response should be:
+\`\`\`json
+{
+    "tokenId": "0.0.5422333"
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;
+
 export const tokenHoldersTemplate = `Given the recent messages and wallet information below:
 {{recentMessages}}
 {{walletInfo}}
