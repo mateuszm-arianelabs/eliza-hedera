@@ -100,8 +100,7 @@ Example response for the input: "Show me your token balances", assuming that in 
 Now respond with a JSON markdown block containing only the extracted values.
 `;
 
-
-export const associateTokenTemplate =  `Given the recent messages and wallet information below:
+export const associateTokenTemplate = `Given the recent messages and wallet information below:
 {{recentMessages}}
 {{walletInfo}}
 Extract the following information about associating tokens with account:
@@ -124,6 +123,42 @@ Example response for the input: "Associate wallet with token 0.0.5422333", the r
 \`\`\`json
 {
     "tokenId": "0.0.5422333"
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;
+
+export const tokenHoldersTemplate = `Given the recent messages and wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+Extract the following information about all tokens balances request:
+1. **Token Id**:
+   - must be a string. Do not include dot after last character. Example of correct token id: "0.0.539314".
+2. **Threshold**:
+   - must be a number. It's **OPTIONAL**. Example: 1000
+
+Always look at the latest message from user and try to extract data from it!
+Respond with a JSON markdown block containing only the extracted values. Fields:
+\`\`\`json
+{
+    "tokenId": string,   // The tokenId address. Required
+    "threshold": number    // threshold, requested wallets should have more tokens than given threshold. Optional
+}
+\`\`\`
+
+Example response for the input: "Can you show me the token holders for 0.0.3391484", the response should be:
+\`\`\`json
+{
+    "tokenId": "0.0.3391484",
+}
+\`\`\`
+
+Example response for the input: "Who owns token 0.0.5432123 and what are their balances? Include only wallets with more than 1234 tokens." the response should be:
+\`\`\`json
+{
+    "tokenId": "0.0.5432123",
+    "threshold": 1234
+}
 \`\`\`
 
 Now respond with a JSON markdown block containing only the extracted values.
