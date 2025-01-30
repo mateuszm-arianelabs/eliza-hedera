@@ -8,6 +8,7 @@ import { createTokenAction } from "./actions/create-token/create-token.ts";
 import { associateTokenAction } from "./actions/associate-token/associate-token.ts";
 import { tokenHoldersAction } from "./actions/token-holders/token-holders.ts";
 import { airdropTokenAction } from "./actions/airdrop-token/airdrop-token.ts";
+import { rejectTokenAction } from "./actions/reject-token/reject-token.ts";
 
 export const hederaPlugin: Plugin = {
     name: "Hedera",
@@ -24,6 +25,7 @@ export const hederaPlugin: Plugin = {
         tokenHoldersAction,
         associateTokenAction,
         airdropTokenAction,
+        rejectTokenAction,
     ],
 };
 
