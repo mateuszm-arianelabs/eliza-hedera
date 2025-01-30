@@ -17,7 +17,8 @@ import { TokenHoldersActionService } from "./services/token-holders-action-servi
 
 export const tokenHoldersAction = {
     name: "HEDERA_TOKEN_HOLDERS",
-    description: "Returns holders of provided token with their balances",
+    description:
+        "Returns holders of provided token with their balances. Can accept optional parameter for filtering accounts with greater or equal amount of tokens.",
     handler: async (
         runtime: IAgentRuntime,
         _message: Memory,
@@ -245,7 +246,7 @@ export const tokenHoldersAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Show me the token holders for {{0.0.123456}} with balances over 1000.",
+                    text: "Show me the token holders for {{0.0.123456}} with balances greater or equal 1000.",
                     action: "HEDERA_TOKEN_HOLDERS",
                 },
             },
@@ -261,7 +262,7 @@ export const tokenHoldersAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Which wallets hold token {{0.0.654321}} and have more than 5000 tokens?",
+                    text: "Which wallets hold token {{0.0.654321}} and have at least 5000 tokens?",
                     action: "HEDERA_TOKEN_HOLDERS",
                 },
             },
@@ -277,7 +278,7 @@ export const tokenHoldersAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Give me a list of wallets holding token {{0.0.111111}} with at least 100 tokens.",
+                    text: "Give me a list of wallets holding token {{0.0.111111}} with minimum 100 tokens.",
                     action: "HEDERA_TOKEN_HOLDERS",
                 },
             },
@@ -293,7 +294,7 @@ export const tokenHoldersAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Can you provide details of wallets owning token {{0.0.222222}} with balances above 2000?",
+                    text: "Can you provide details of wallets owning token {{0.0.222222}} with balances equal or above 2000?",
                     action: "HEDERA_TOKEN_HOLDERS",
                 },
             },
@@ -309,7 +310,7 @@ export const tokenHoldersAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Who holds token {{0.0.333333}} and has a balance greater than 10000?",
+                    text: "Who holds token {{0.0.333333}} and has a balance greater than or equal 10000?",
                     action: "HEDERA_TOKEN_HOLDERS",
                 },
             },
@@ -341,7 +342,7 @@ export const tokenHoldersAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Who owns token {{0.0.555555}}? Only show wallets with more than 750 tokens.",
+                    text: "Who owns token {{0.0.555555}}? Only show wallets with at least 750 tokens.",
                     action: "HEDERA_TOKEN_HOLDERS",
                 },
             },
