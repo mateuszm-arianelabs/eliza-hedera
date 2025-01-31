@@ -83,6 +83,8 @@ Note that there is no action required for getting agent's HBAR balance.
 ### HBAR Balance
 
 HBAR balance action allows checking HBAR balance of any given valid Hedera wallet.
+Note that this action takes one mandatory parameter:
+- **AccountId** - id of Hedera account (ex. `0.0.4515512`)
 
 #### Example Prompts
 
@@ -105,13 +107,22 @@ I'll help you get the HBAR balance of wallet 0.0.5423981. (HEDERA_HBAR_BALANCE)
 ```
 Address 0.0.5423981 has balance of 120.76334864 HBAR
 ```
-Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
+Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. `0.0.5423981`).
+
+```
+Whats HBAR balance of wallet 0.0.5423981
+Show me HBAR balance of wallet 0.0.5423949. Call HEDERA_HBAR_BALANCE action
+Check HBAR balance of wallet 0.0.4515756
+```
 
 ---
 
 ### HTS Balance
 
 HTS balance action allows checking HTS balance of any given valid Hedera wallet.
+Note that this action takes two mandatory parameters:
+- **AccountId** - id of Hedera account (ex. `0.0.4515512`)
+- **TokenId** - id of HTS token (ex. `0.0.5446064`)
 
 #### Example Prompts
 
@@ -134,13 +145,15 @@ Calling relevant action to retrieve token balance. Please wait...
 ```
 Address 0.0.5446063 has balance of 10000000 USD Bar (token id: 0.0.5446064)
 ```
-Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
+Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. `0.0.5423981`).
 
 ---
 
 ### All Tokens Balance
 
 All tokens balance action allows checking all HTS tokens balances of any given valid Hedera wallet.
+Note that this action takes one mandatory parameter:
+- **AccountId** - id of Hedera account (ex. `0.0.4515512`)
 
 #### Example Prompts
 
@@ -169,7 +182,7 @@ HIP-904 FT: 0 HIP904FT
 Test Token test : 0 HTT
 Test Token: 0 HTT
 ```
-Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
+Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. `0.0.5423981`).
 
 ---
 
@@ -177,7 +190,7 @@ Currently, EVM wallet addresses are **not supported.** Please pass Hedera addres
 
 Token Holders action allows checking all holders of any given valid token. Token is passed by its token id.
 Note that this action takes two parameters:
-- **tokenId** - valid token id (ex. 0.0.5446064 ) - required parameter
+- **tokenId** - valid token id (ex. `0.0.5446064`) - required parameter
 - **threshold** - integer non-negative number, if passed 0 action will return all addresses associated with the token - optional parameter
 
 If threshold is not passed the action will fetch all wallets associated with given token and with non-zero balances. For example see following section.
@@ -249,7 +262,7 @@ Token 0.0.5445349 (AirDrop Token2) has following holders:
 ```
 
 
-Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
+Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. `0.0.5423981`).
 
 ---
 
@@ -260,7 +273,7 @@ Note that this action takes four mandatory parameters:
 - **name** - name of the new token to create
 - **symbol** - token symbol as uppercase short string
 - **decimals** - token decimals as number
-- **initialSupply** - initial supply of fungible tokens
+- **initialSupply** - initial supply of fungible tokens given in {denom format?? Implementation should be later changed to accept display unit format}
 
 #### Example Prompts
 
@@ -283,6 +296,12 @@ Calling CREATE_TOKEN action to create a new token with name NotMyToken, symbol N
 ```
 Created new token with id: 0.0.5450092
 ```
+Example of other supported requests for this action:
+```
+Create a new token called CryptoCoin with symbol CCN, 6 decimals, and a total supply of 50000.
+Create a new token named HederaDollar with ticker H$, 4 decimals, and 1000000 initial supply.
+Launch a new HTS token called SkyCredits with ticker SKC, 9 decimal places, and a total supply of 25000.
+```
 
 ---
 
@@ -291,7 +310,7 @@ Created new token with id: 0.0.5450092
 Create token action allows to create a new fungible token on the Hedera network.
 Note that this action takes three mandatory parameters:
 - **Token id** - id token to airdrop
-- **amount** - amount of token in denom unit
+- **amount** - amount of token in given in {denom format?? Implementation should be later changed to accept display unit format}
 - **recipients** - array of account ids of recipients
 
 #### Example Prompts
@@ -318,6 +337,12 @@ Airdrop token successfully executed.
 
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
 
+Example of other supported requests for this action:
+```
+Make airdrop of 2 tokens 0.0.5450643 to multiple wallets: 0.0.5392887, 0.0.5393076, 0.0.4515756
+Send token airdrop of 2 tokens 0.0.5450643 to wallets: 0.0.5392887, 0.0.5393076, 0.0.4515756.
+Airdrop token 0.0.5450643 to wallets: 0.0.5392887, 0.0.5393076, 0.0.4515756. Amount: 2.
+```
 ---
 
 ### Reject Token
@@ -352,6 +377,13 @@ Successfully rejected token: 0.0.5445541. Tx hash: 0.0.5393196@1738313027.916224
 
 Currently, plugin supports rejecting only one token at once.
 
+Example of other supported requests for this action:
+```
+I don't want to accept the token 0.0.542086 from airdrop. Reject it.
+I do not wish to receive token 0.0.112233. Reject it immediately.
+Remove airdropped token 0.0.654321 from my account.
+```
+
 ---
 
 ### Associate Token
@@ -383,13 +415,22 @@ Token 0.0.5450063 has been associated with account.
 Transaction hash: f2601d4fdb986f412f7ef1342d9b943fd16ff39029b0f8c054ffb5dffe0b2ef25914da9d2662159fe7883c5f47bed3cc
 ```
 
-Currently, plugin supports associating with only one token at once.
+Currently, plugin supports associating with only one token for one prompt.
+
+Example of other supported requests for this action:
+```
+Please associate my account with token 0.0.111222.
+Connect my wallet to token 0.0.333444.
+Could you link token 0.0.555666 to my wallet?
+Make my wallet associated with token 0.0.999000.
+```
 
 ### Transfer HBAR
 
 Transfer HBAR action allows to transfer HBAR from connected account to given account.
-Note that this action takes one mandatory parameter:
-- **Token id** - id of token to associate
+Note that this action takes two mandatory parameters:
+- **Amount** - amount of HBAR to transfer (given in display unit)
+- **Recipient AccountId** - address of wallet to receive the tokens
 
 #### Example Prompts
 
