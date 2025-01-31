@@ -138,7 +138,7 @@ Currently, EVM wallet addresses are **not supported.** Please pass Hedera addres
 
 ---
 
-### All tokens balance
+### All Tokens Balance
 
 All tokens balance action allows checking all HTS tokens balances of any given valid Hedera wallet.
 
@@ -173,7 +173,7 @@ Currently, EVM wallet addresses are **not supported.** Please pass Hedera addres
 
 ---
 
-### Token Holders action
+### Token Holders
 
 Token Holders action allows checking all holders of any given valid token. Token is passed by its token id.
 Note that this action takes two parameters:
@@ -250,6 +250,177 @@ Token 0.0.5445349 (AirDrop Token2) has following holders:
 
 
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
+
+---
+
+### Create token
+
+Create token action allows to create a new fungible token on the Hedera network.
+Note that this action takes four mandatory parameters:
+- **name** - name of the new token to create
+- **symbol** - token symbol as uppercase short string
+- **decimals** - token decimals as number
+- **initialSupply** - initial supply of fungible tokens
+
+#### Example Prompts
+
+Below is presented a flow of using Create Token action
+
+1. User input:
+
+```
+Create new token with name MyToken with symbol MTK, 8 decimals and 1000 initial supply
+```
+
+2. LLM response - action execution:
+
+```
+Calling CREATE_TOKEN action to create a new token with name NotMyToken, symbol NMTK, 8 decimals, and 1000 initial supply. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Created new token with id: 0.0.5450092
+```
+
+---
+
+### Airdrop token
+
+Create token action allows to create a new fungible token on the Hedera network.
+Note that this action takes three mandatory parameters:
+- **Token id** - id token to airdrop
+- **amount** - amount of token in denom unit
+- **recipients** - array of account ids of recipients
+
+#### Example Prompts
+
+Below is presented a flow of using Airdrop Token action
+
+1. User input:
+
+```
+Airdrop 100 tokens 0.0.5450181 to 0.0.5450165 and 0.0.5450137.
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Airdrop token successfully executed.
+```
+
+Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
+
+---
+
+### Reject Token
+
+Reject token action allows to reject unwanted token received from airdrop on the Hedera network.
+Note that this action takes one mandatory parameter:
+- **Token id** - id of token to reject
+
+Keep in mind that rejecting a token does not mean disassociating with it.
+
+#### Example Prompts
+
+Below is presented a flow of using Reject Token action
+
+1. User input:
+
+```
+Reject token 0.0.5445349.
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Successfully rejected token: 0.0.5445541. Tx hash: 0.0.5393196@1738313027.916224718
+```
+
+Currently, plugin supports rejecting only one token at once.
+
+---
+
+### Associate Token
+
+Associate Token action allows to add selected token to your account.
+Note that this action takes one mandatory parameter:
+- **Token id** - id of token to associate
+
+#### Example Prompts
+
+Below is presented a flow of using Associate Token action
+
+1. User input:
+
+```
+Associate my wallet with token 0.0.5450063.
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Token 0.0.5450063 has been associated with account.
+Transaction hash: f2601d4fdb986f412f7ef1342d9b943fd16ff39029b0f8c054ffb5dffe0b2ef25914da9d2662159fe7883c5f47bed3cc
+```
+
+Currently, plugin supports associating with only one token at once.
+
+### Transfer HBAR
+
+Transfer HBAR action allows to transfer HBAR from connected account to given account.
+Note that this action takes one mandatory parameter:
+- **Token id** - id of token to associate
+
+#### Example Prompts
+
+Below is presented a flow of using Associate Token action
+
+1. User input:
+
+```
+Transfer 100 HBAR to 0.0.5392887.
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+HBAR transfer successfully. 0.0.5393196@1738317322.326410854
+```
+
+Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
+
+Example of other supported requests for this action:
+```
+Make a transaction of 4 HBAR to 0.0.5392887.
+Send 1 HBAR to account 0.0.5392887.
+Transfer exactly 1.1 HBAR to 0.0.5392887.
+```
 
 ---
 
