@@ -8,6 +8,7 @@ Extract the following information about HBAR balance:
 2. **Symbol**:
    - Must be HBAR
 
+Always look at the latest message from user and try to extract data from it!
 Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
 \`\`\`json
 {
@@ -45,6 +46,7 @@ Extract the following information about HTS balance request:
 2. **TokenId**:
    - Must be a string Do not include dot after last character. Example of correct tokenId: "0.0.5422268".
 
+Always look at the latest message from user and try to extract data from it!
 Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
 \`\`\`json
 {
