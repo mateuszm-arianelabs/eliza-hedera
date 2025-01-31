@@ -15,7 +15,7 @@ import { airdropTokenParamsSchema } from "./schema.ts";
 import { AirdropTokenService } from "./services/airdrop-token.ts";
 
 export const airdropTokenAction: Action = {
-    name: "AIRDROP_TOKEN",
+    name: "HEDERA_AIRDROP_TOKEN",
     description: "Airdrop a token on the Hedera network",
     handler: async (
         runtime: IAgentRuntime,
@@ -72,20 +72,88 @@ export const airdropTokenAction: Action = {
     examples: [
         [
             {
-                user: "assistant",
+                user: "{{user}}",
                 content: {
-                    text: "I'll help you airdrop tokens",
-                    action: "AIRDROP_TOKEN",
+                    text: "Airdrop {{10}} tokens {{0.0.5426001}} for {{0.0.5399001}}, {{0.0.5399012}}, {{0.0.5399023}}",
+                    action: "HEDERA_AIRDROP_TOKEN",
                 },
             },
             {
-                user: "user",
+                user: "{{assistant}}",
                 content: {
-                    text: "Airdrop 5.5 tokens 0.0.5425085 for 0.0.5398121, 0.0.5393967, 0.0.5395127",
-                    action: "AIRDROP_TOKEN",
+                    text: "",
+                    action: "HEDERA_AIRDROP_TOKEN",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "Airdrop {{3.75}} tokens {{0.0.5432002}} to wallets {{0.0.5401005}}, {{0.0.5402006}}, {{0.0.5403007}}, {{0.0.5404008}}",
+                    action: "HEDERA_AIRDROP_TOKEN",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
+                    action: "HEDERA_AIRDROP_TOKEN",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "Send a token airdrop of {{15}} tokens with id {{0.0.5427890}} to {{0.0.5412345}}, {{0.0.5416789}}",
+                    action: "HEDERA_AIRDROP_TOKEN",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
+                    action: "HEDERA_AIRDROP_TOKEN",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "Airdrop {{7.2}} tokens {{0.0.5436781}} to {{0.0.5401122}}, {{0.0.5402233}}, {{0.0.5403344}}, {{0.0.5404455}}, {{0.0.5405566}}",
+                    action: "HEDERA_AIRDROP_TOKEN",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
+                    action: "HEDERA_AIRDROP_TOKEN",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "Make airdrop of {{20}} tokens (token id: {{0.0.5456789}}) to multiple wallets: {{0.0.5410001}}, {{0.0.5410002}}, {{0.0.5410003}}, {{0.0.5410004}}, {{0.0.5410005}}",
+                    action: "HEDERA_AIRDROP_TOKEN",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
+                    action: "HEDERA_AIRDROP_TOKEN",
                 },
             },
         ],
     ],
-    similes: ["DROP_TOKEN", "DROP_TOKENS", "AIRDROP_TOKENS"],
+    similes: [
+        "HEDERA_DROP_TOKEN",
+        "HEDERA_DROP_TOKENS",
+        "HEDERA_AIRDROP_TOKENS",
+    ],
 };

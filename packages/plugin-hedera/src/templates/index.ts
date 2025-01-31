@@ -33,7 +33,7 @@ Now respond with a JSON markdown block containing only the extracted values.
 export const hederaCreateTokenTemplate = `Given the recent messages and hedera wallet information below:
 {{recentMessages}}
 {{walletInfo}}
-Extract the following information about the token to create in hedera:
+Extract the following information about the token to create on hedera blockchain:
 1. **Token name**:
    - Extract name of the token.
    - The value must be a string representing the name of the new token.
@@ -50,6 +50,7 @@ Extract the following information about the token to create in hedera:
    - Extract only the numeric value from the instruction.
    - Specifies the initial supply of fungible tokens to be put in circulation.
 
+Always try to extract the information from last message! Do not use previously completed requests data to fill extracted information!
 Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
 \`\`\`json
 {
@@ -76,7 +77,7 @@ Now respond with a JSON markdown block containing only the extracted values.
 export const hederaAirdropTokenTemplate = `Given the recent messages and hedera wallet information below:
 {{recentMessages}}
 {{walletInfo}}
-Extract the following information about the token airdrop in hedera:
+Extract the following information about the token airdrop in hedera using newest message from {{recentMessages}}:
 1. **Token id**:
    - Extract id of the token to airdrop.
    - The value must be a string representing id of token.
@@ -89,6 +90,9 @@ Extract the following information about the token airdrop in hedera:
    - Extract value of token to send to recipients.
    - The value must be number, represent amount of tokens to send.
 
+Always try to extract the information from last message! Do not use previously completed requests data to fill extracted information!
+Airdrop can support up to 10 addresses. If only one is provided also return it as a list!
+
 Respond with a JSON markdown block containing only the extracted values.
 All fields are required, recipients array should have minimum one accountId(string):
 \`\`\`json
@@ -99,12 +103,21 @@ All fields are required, recipients array should have minimum one accountId(stri
 }
 \`\`\`
 
-Example reponse for the input: "Airdrop 5.5 tokens 0.0.5425085 for 0.0.5398121, 0.0.5393967, 0.0.5395127", the response should be:
+Example reponse for the input: "Airdrop 50 tokens 0.0.5425085 for 0.0.5398121, 0.0.5393967, 0.0.5395127", the response should be:
 \`\`\`json
 {
     "tokenId": "0.0.5425085",
     "recipients": ["0.0.5398121", "0.0.5393967", "0.0.5395127"],
-    "amount": 5.5
+    "amount": 50
+}
+\`\`\`
+
+Example reponse for the input: "Airdrop 50 tokens 0.0.5425085 for 0.0.5398121.", the response should be:
+\`\`\`json
+{
+    "tokenId": "0.0.5425085",
+    "recipients": ["0.0.5398121"],
+    "amount": 50
 }
 \`\`\`
 
