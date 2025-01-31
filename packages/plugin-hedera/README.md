@@ -109,6 +109,7 @@ Address 0.0.5423981 has balance of 120.76334864 HBAR
 ```
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. `0.0.5423981`).
 
+Examples of other supported requests for this action:
 ```
 Whats HBAR balance of wallet 0.0.5423981
 Show me HBAR balance of wallet 0.0.5423949. Call HEDERA_HBAR_BALANCE action
@@ -147,17 +148,26 @@ Address 0.0.5446063 has balance of 10000000 USD Bar (token id: 0.0.5446064)
 ```
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. `0.0.5423981`).
 
+Examples of other supported requests for this action:
+```
+Show me balance of token 0.0.5450643 for account account 0.0.5392887
+Whats 0.0.5450643 balance for wallet 0.0.5392887
+Show me balance of hts token with id 0.0.5450643 for wallet 0.0.5392887.
+```
+
 ---
 
 ### All Tokens Balance
 
 All tokens balance action allows checking all HTS tokens balances of any given valid Hedera wallet.
-Note that this action takes one mandatory parameter:
+Note that this action takes one optional parameter:
 - **AccountId** - id of Hedera account (ex. `0.0.4515512`)
+
+If accountId is not provided, action defaults to agents connected wallet.
 
 #### Example Prompts
 
-Below is presented a flow of using All tokens balance action
+Below is presented a flow of using All tokens balance action with wallet address provided.
 
 1. User input:
 
@@ -182,7 +192,42 @@ HIP-904 FT: 0 HIP904FT
 Test Token test : 0 HTT
 Test Token: 0 HTT
 ```
+
+Below is presented a flow of using All tokens balance action without wallet address provided.
+
+1. User input:
+
+```
+Show me your HTS token balances.
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action to retrieve token balances. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Address 0.0.5393196 has following token balances:
+TokenTokenToken: 0.1 TTT
+SkyCredits: 0.000025 SKC
+MyToken: 2.1 MTK
+CryptoCoin: 0.05 CCN
+HederaDollar: 99.676 H$
+kolor: 999800 KLR
+MyToken: 0.00001 MTK
+```
+
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. `0.0.5423981`).
+
+Examples of other supported requests for this action:
+```
+Show me the balances of all HTS tokens for wallet 0.0.4515756
+What are the HTS token balances for wallet 0.0.4515756?
+Show me your HTS token balances.
+```
 
 ---
 
@@ -261,8 +306,16 @@ Token 0.0.5445349 (AirDrop Token2) has following holders:
 0.0.5392887: 9990 ADT2
 ```
 
-
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. `0.0.5423981`).
+
+Examples of other supported requests for this action:
+```
+Who owns token 0.0.5451966 and what are their balances?
+Can you show me the token holders for 0.0.5450181?
+Show me the balance of token 0.0.5450181 across all wallets.
+Which wallets hold token 0.0.5450181 and have at least 5000 tokens?
+Can you provide details of wallets owning token 0.0.5450181 with balances equal or above 2000?
+```
 
 ---
 
@@ -296,7 +349,7 @@ Calling CREATE_TOKEN action to create a new token with name NotMyToken, symbol N
 ```
 Created new token with id: 0.0.5450092
 ```
-Example of other supported requests for this action:
+Examples of other supported requests for this action:
 ```
 Create a new token called CryptoCoin with symbol CCN, 6 decimals, and a total supply of 50000.
 Create a new token named HederaDollar with ticker H$, 4 decimals, and 1000000 initial supply.
@@ -337,7 +390,7 @@ Airdrop token successfully executed.
 
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
 
-Example of other supported requests for this action:
+Examples of other supported requests for this action:
 ```
 Make airdrop of 2 tokens 0.0.5450643 to multiple wallets: 0.0.5392887, 0.0.5393076, 0.0.4515756
 Send token airdrop of 2 tokens 0.0.5450643 to wallets: 0.0.5392887, 0.0.5393076, 0.0.4515756.
@@ -377,7 +430,7 @@ Successfully rejected token: 0.0.5445541. Tx hash: 0.0.5393196@1738313027.916224
 
 Currently, plugin supports rejecting only one token at once.
 
-Example of other supported requests for this action:
+Examples of other supported requests for this action:
 ```
 I don't want to accept the token 0.0.542086 from airdrop. Reject it.
 I do not wish to receive token 0.0.112233. Reject it immediately.
@@ -417,7 +470,7 @@ Transaction hash: f2601d4fdb986f412f7ef1342d9b943fd16ff39029b0f8c054ffb5dffe0b2e
 
 Currently, plugin supports associating with only one token for one prompt.
 
-Example of other supported requests for this action:
+Examples of other supported requests for this action:
 ```
 Please associate my account with token 0.0.111222.
 Connect my wallet to token 0.0.333444.
@@ -456,7 +509,7 @@ HBAR transfer successfully. 0.0.5393196@1738317322.326410854
 
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
 
-Example of other supported requests for this action:
+Examples of other supported requests for this action:
 ```
 Make a transaction of 4 HBAR to 0.0.5392887.
 Send 1 HBAR to account 0.0.5392887.
