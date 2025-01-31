@@ -1,7 +1,7 @@
-export const hederaTransferTemplate = `Given the recent messages and hedera wallet information below:
+export const hederaHBARTransferTemplate = `Given the recent messages and hedera wallet information below:
 {{recentMessages}}
 {{walletInfo}}
-Extract the following information about the requested transfer:
+Extract the following information about the requested HBAR transfer:
 1. **Amount**:
    - Extract only the numeric value from the instruction.
    - The value must be a string representing the amount in the display denomination (e.g., "0.0001" for HBAR). Do not include the symbol.
@@ -10,6 +10,7 @@ Extract the following information about the requested transfer:
    - Must be a valid hedera account id in template "0.0.NUMBER".
    - Return value always as string, Examples: "0.0.123", "0.0.2314"
 
+Always try to extract the information from last message! Do not use previously completed requests data to fill extracted information!
 Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
 \`\`\`json
 {
