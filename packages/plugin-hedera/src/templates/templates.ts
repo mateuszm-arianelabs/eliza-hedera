@@ -21,6 +21,7 @@ Example response for the input: "Show me HBAR balance of wallet 0.1.123123.", th
 {
     "symbol": "HBAR",
     "address": "0.1.123123"
+}
 \`\`\`
 
 Example response for the input: "Show me HBAR balance of wallet 0.0.539314.", the response should be:
@@ -28,6 +29,7 @@ Example response for the input: "Show me HBAR balance of wallet 0.0.539314.", th
 {
     "symbol": "HBAR",
     "address": "0.0.539314"
+}
 \`\`\`
 
 Now respond with a JSON markdown block containing only the extracted values.
@@ -52,6 +54,7 @@ Respond with a JSON markdown block containing only the extracted values. All fie
 {
     "tokenId": string,   // Id of the token.
     "address": string   // The wallet address.
+}
 \`\`\`
 
 Example response for the input: "Show me balance of token 0.0.5424086 for wallet 0.0.5423981.", the response should be:
@@ -59,6 +62,7 @@ Example response for the input: "Show me balance of token 0.0.5424086 for wallet
 {
     "tokenId": "0.0.5424086",
     "address": "0.0.5423981"
+}
 \`\`\`
 Note that the last dot '... for wallet 0.0.5423981.' was omitted while extracting wallet address.
 
@@ -67,6 +71,7 @@ Example response for the input: "Show me balance of HTS-TOKEN with id 0.0.542226
 {
     "tokenId": "0.0.5422268",
     "address": "0.0.5423949"
+}
 \`\`\`
 
 Now respond with a JSON markdown block containing only the extracted values.
@@ -110,22 +115,25 @@ Extract the following information about rejecting token request:
    - must be a string. Do not include dot after last character. Example of correct token id: "0.0.539314".
 
 Always look at the latest message from user and try to extract data from it!
-Respond with a JSON markdown block containing only the extracted values. All fields are rquired:
+Respond with a JSON markdown block containing only the extracted values. All fields are required:
 \`\`\`json
 {
     "tokenId": string   // Id of the token to reject
+}
 \`\`\`
 
 Example response for the input: "Reject token 0.0.5445349.", the response should be:
 \`\`\`json
 {
     "tokenId": "0.0.5445349"
+}
 \`\`\`
 
 Example response for the input: "Reject received airdrop of token 0.0.539314.", the response should be:
 \`\`\`json
 {
     "tokenId": "0.0.539314"
+}
 \`\`\`
 
 Now respond with a JSON markdown block containing only the extracted values.
@@ -142,18 +150,21 @@ Respond with a JSON markdown block containing only the extracted values. All fie
 \`\`\`json
 {
     "tokenId": string,   // The tokenId address. Required
+}
 \`\`\`
 
 Example response for the input: "Associate your wallet with token 0.0.5422268", the response should be:
 \`\`\`json
 {
     "tokenId": "0.0.5422268"
+}
 \`\`\`
 
 Example response for the input: "Associate wallet with token 0.0.5422333", the response should be:
 \`\`\`json
 {
     "tokenId": "0.0.5422333"
+}
 \`\`\`
 
 Now respond with a JSON markdown block containing only the extracted values.
