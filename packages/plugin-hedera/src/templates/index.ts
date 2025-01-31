@@ -209,3 +209,40 @@ Example response for the input: "Claim airdrop (2) 50 Tokens (0.0.5447843) from 
 
 Now respond with a JSON markdown block containing only the extracted values.
 `;
+
+export const hederaTransferTokenTemplate = `Given the recent messages and hedera wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+Extract the following information about the token transaction:
+1. **tokenId**:
+   - Extract id of the token.
+   - The value must be a string representing id of token on hedera chain.
+   - Example tokenId: "0.0.5425085"
+
+2. **toAccountId**:
+   - Extract recipient account Id specified as a string.
+   - The string should contains only numbers and dots.
+   - Example accountId: "0.0.4515512"
+
+3. **amount**:
+   - Extract only the numeric value from the instruction.
+   - The amount of tokens to send as decimal number.
+
+Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
+\`\`\`json
+{
+    "tokenId": string, // Id of token to send as a string.
+    "toAccountId": string, // Recipient account Id specified as a string.
+    "amount": number // Amount of tokens to send as number.
+\`\`\`
+
+Example reponse for the input: "Make transfer 3.10 of tokens 0.0.5425085 to account 0.0.4515512", the response should be:
+\`\`\`json
+{
+    "tokenId": "0.0.5425085",
+    "toAccountId": "0.0.4515512",
+    "amount": 3.10
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;
