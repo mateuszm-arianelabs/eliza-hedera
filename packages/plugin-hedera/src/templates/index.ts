@@ -164,3 +164,48 @@ Example response for the input: "Show me airdrops for 0.0.5422268", the response
 
 Now respond with a JSON markdown block containing only the extracted values.
 `;
+
+export const claimAirdropTemplate = `Given the recent messages and wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+Extract data of pending token airdrop from message with following instructions.
+1. **Sender Id**
+    - Sender Id should looks like "0.0.5422268" and should be string.
+    - Sender Id as string cant have other chars than numbers 0 to 9 and dots.
+    - Dots cant start accountId string or end, there is always number on start and end.
+    - Example sender ids are "0.0.5422268", "0.0.4515756"
+
+3. **Token Id**
+    - Token Id should looks like "0.0.5422268" and should be string.
+    - Token Id as string cant have other chars than numbers 0 to 9 and dots.
+    - Dots cant start accountId string or end, there is always number on start and end.
+    - Example token ids are "0.0.5447843", "0.0.4515756"
+
+Respond with a JSON markdown block containing only the extracted values:
+\`\`\`json
+{
+    "senderId": string,   // The senderId for example "0.0.4515756"
+    "tokenId": string   // The tokenId for example "0.0.4515756"
+}
+\`\`\`
+
+The message commonly have structure like "Claim airdrop (1) 5 Tokens (TOKEN_ID) from SENDER_ID" where TOKEN_ID and SENDER_ID are variables to extract.
+
+Example response for the input: "Claim airdrop (1) 5 Tokens (0.0.5445766) from 0.0.5393076", the response should be:
+\`\`\`json
+{
+    "senderId": "0.0.5393076",
+    "tokenId": "0.0.5445766"
+}
+\`\`\`
+
+Example response for the input: "Claim airdrop (2) 50 Tokens (0.0.5447843) from 0.0.5393076", the response should be:
+\`\`\`json
+{
+    "senderId": "0.0.5393076",
+    "tokenId": "0.0.5447843"
+}
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;

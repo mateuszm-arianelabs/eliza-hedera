@@ -1,0 +1,117 @@
+import {
+    Action,
+    composeContext,
+    elizaLogger,
+    generateObjectDeprecated,
+    HandlerCallback,
+    IAgentRuntime,
+    Memory,
+    ModelClass,
+    State,
+} from "@elizaos/core";
+import { HederaProvider } from "../../providers/client";
+import { claimAirdropTemplate } from "../../templates";
+import { claimAirdropParamsSchema } from "./schema.ts";
+import { ClaimAirdropService } from "./services/claim-airdrop-service.ts";
+
+export const claimAirdropAction: Action = {
+    name: "HEDERA_CLAIM_AIRDROP",
+    description: "Claim available pending token airdrop",
+    handler: async (
+        runtime: IAgentRuntime,
+        _message: Memory,
+        state: State,
+        _options: { [key: string]: unknown },
+        _callback?: HandlerCallback
+    ) => {
+        console.log("invoke");
+
+        const claimAirdropContext = composeContext({
+            state: state,
+            template: claimAirdropTemplate,
+            templatingEngine: "handlebars",
+        });
+
+        console.log("test");
+
+        const claimAirdropContent = await generateObjectDeprecated({
+            runtime: runtime,
+            context: claimAirdropContext,
+            modelClass: ModelClass.SMALL,
+        });
+
+        try {
+            console.log(claimAirdropContent);
+
+            const claimAirdropData =
+                claimAirdropParamsSchema.parse(claimAirdropContent);
+
+            console.log(claimAirdropData);
+
+            const accountId = runtime.getSetting("HEDERA_ACCOUNT_ID");
+
+            const hederaProvider = new HederaProvider(runtime);
+            const action = new ClaimAirdropService(hederaProvider);
+
+            await action.execute(claimAirdropData, accountId);
+
+            await _callback({
+                text: `Successfully claimed airdrop for token ${claimAirdropData.tokenId}`,
+            });
+
+            return true;
+        } catch (error) {
+            elizaLogger.error("Error during claiming airdrop:", error);
+
+            if (_callback) {
+                await _callback({
+                    text: `Error during claiming airdrop: ${error.message}`,
+                    content: { error: error.message },
+                });
+            }
+            return false;
+        }
+    },
+    validate: async (runtime: IAgentRuntime) => {
+        const privateKey = runtime.getSetting("HEDERA_PRIVATE_KEY");
+        const accountAddress = runtime.getSetting("HEDERA_ACCOUNT_ID");
+        const selectedNetworkType = runtime.getSetting("HEDERA_NETWORK_TYPE");
+
+        return !!(privateKey && accountAddress && selectedNetworkType);
+    },
+    examples: [
+        [
+            {
+                user: "{{user1}}",
+                content: {
+                    text: "Claim airdrop (1) 5 Tokens ({{0.0.5445766}}) from {{0.0.5393076}}",
+                    action: "HEDERA_CLAIM_AIRDROP",
+                },
+            },
+            {
+                user: "{{user2}}",
+                content: {
+                    text: "",
+                    action: "HEDERA_CLAIM_AIRDROP",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user1}}",
+                content: {
+                    text: "Claim airdrop (2) 50 Tokens ({{0.0.5447843}}) from {{0.0.5393076}}",
+                    action: "HEDERA_CLAIM_AIRDROP",
+                },
+            },
+            {
+                user: "{{user2}}",
+                content: {
+                    text: "",
+                    action: "HEDERA_CLAIM_AIRDROP",
+                },
+            },
+        ],
+    ],
+    similes: ["CLAIM_AIRDROP", "CLAIM_TOKEN_AIRDROP", "CLAIM_TOKEN"],
+};
