@@ -15,7 +15,7 @@ import { transferTokenParamsSchema } from "./schema.ts";
 import { HederaProvider } from "../../providers/client";
 
 export const transferTokenAction: Action = {
-    name: "TRANSFER_TOKEN",
+    name: "HEDERA_TRANSFER_TOKEN",
     description:
         "Transfer token using provided tokenId between addresses on the same chain",
     handler: async (
@@ -72,17 +72,17 @@ export const transferTokenAction: Action = {
                 user: "assistant",
                 content: {
                     text: "I'll help you transfer 3.10 tokens 0.0.5425085 to 0.0.4515512",
-                    action: "TRANSFER_TOKEN",
+                    action: "HEDERA_TRANSFER_TOKEN",
                 },
             },
             {
                 user: "user",
                 content: {
                     text: "Make transfer 3.10 of tokens 0.0.5425085 to account 0.0.4515512",
-                    action: "TRANSFER_TOKEN",
+                    action: "HEDERA_TRANSFER_TOKEN",
                 },
             },
         ],
     ],
-    similes: ["SEND_TOKENS", "TOKEN_TRANSFER", "MOVE_TOKENS"],
+    similes: ["TRANSFER_TOKEN", "SEND_TOKENS", "TOKEN_TRANSFER", "MOVE_TOKENS"],
 };

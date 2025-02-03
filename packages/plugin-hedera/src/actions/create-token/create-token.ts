@@ -1,10 +1,12 @@
 import {
     Action,
-    composeContext, elizaLogger,
+    composeContext,
+    elizaLogger,
     generateObjectDeprecated,
     HandlerCallback,
     type IAgentRuntime,
-    type Memory, ModelClass,
+    type Memory,
+    ModelClass,
     type State,
 } from "@elizaos/core";
 import { hederaCreateTokenTemplate } from "../../templates";
@@ -13,7 +15,7 @@ import { CreateTokenService } from "./services/create-token.ts";
 import { createTokenParamsSchema } from "./schema.ts";
 
 export const createTokenAction: Action = {
-    name: "CREATE_TOKEN",
+    name: "HEDERA_CREATE_TOKEN",
     description: "Create a new fungible token on the Hedera network",
     handler: async (
         runtime: IAgentRuntime,
@@ -35,12 +37,15 @@ export const createTokenAction: Action = {
                 modelClass: ModelClass.SMALL,
             });
 
-            const createTokenData = createTokenParamsSchema.parse(hederaCreateTokenContent);
+            const createTokenData = createTokenParamsSchema.parse(
+                hederaCreateTokenContent
+            );
 
-            const hederaProvider = new HederaProvider(runtime)
+            const hederaProvider = new HederaProvider(runtime);
             const createTokenService = new CreateTokenService(hederaProvider);
 
-            const newTokenId = await createTokenService.execute(createTokenData)
+            const newTokenId =
+                await createTokenService.execute(createTokenData);
 
             await callback({
                 text: `Created new token with id: ${newTokenId.toString()}`,
@@ -48,7 +53,7 @@ export const createTokenAction: Action = {
             });
 
             return true;
-        } catch(error) {
+        } catch (error) {
             elizaLogger.error("Error during token creation:", error);
 
             await callback({
@@ -72,17 +77,22 @@ export const createTokenAction: Action = {
                 user: "assistant",
                 content: {
                     text: "I'll help you create new token MyToken MTK, with 8 decimals and 1000 initial supply",
-                    action: "CREATE_TOKEN",
+                    action: "HEDERA_CREATE_TOKEN",
                 },
             },
             {
                 user: "user",
                 content: {
                     text: "Create new token with name MyToken with symbol MTK, 8 decimals and 1000 initial supply",
-                    action: "CREATE_TOKEN",
+                    action: "HEDERA_CREATE_TOKEN",
                 },
             },
         ],
     ],
-    similes: ["NEW_TOKEN", "CREATE_NEW_TOKEN", "NEW_FUNGIBLE_TOKEN"],
+    similes: [
+        "CREATE_TOKEN",
+        "NEW_TOKEN",
+        "CREATE_NEW_TOKEN",
+        "NEW_FUNGIBLE_TOKEN",
+    ],
 };

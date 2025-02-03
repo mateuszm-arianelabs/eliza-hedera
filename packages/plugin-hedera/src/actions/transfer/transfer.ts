@@ -1,19 +1,21 @@
 import {
     Action,
-    composeContext, elizaLogger,
+    composeContext,
+    elizaLogger,
     generateObjectDeprecated,
     HandlerCallback,
     type IAgentRuntime,
-    type Memory, ModelClass,
+    type Memory,
+    ModelClass,
     type State,
 } from "@elizaos/core";
-import {hederaTransferTemplate} from "../../templates";
+import { hederaTransferTemplate } from "../../templates";
 import { HederaProvider } from "../../providers/client";
 import { TransferHbarService } from "./services/transfer-hbar.ts";
 import { transferDataParamsSchema } from "./schema.ts";
 
 export const transferAction: Action = {
-    name: "TRANSFER_HBAR",
+    name: "HEDERA_TRANSFER_HBAR",
     description: "Transfer HBAR between addresses on the same chain",
     handler: async (
         runtime: IAgentRuntime,
@@ -35,19 +37,21 @@ export const transferAction: Action = {
                 modelClass: ModelClass.SMALL,
             });
 
-            const hederaTransferData = transferDataParamsSchema.parse(hederaTransferContent)
+            const hederaTransferData = transferDataParamsSchema.parse(
+                hederaTransferContent
+            );
 
             const hederaProvider = new HederaProvider(runtime);
             const transferHbarService = new TransferHbarService(hederaProvider);
 
-            const tx = await transferHbarService.execute(hederaTransferData)
+            const tx = await transferHbarService.execute(hederaTransferData);
 
             await callback({
                 text: `HBAR transfer successfully. ${tx.toString()}`,
             });
 
-            return true
-        } catch(error) {
+            return true;
+        } catch (error) {
             elizaLogger.error("Error during HBAR transfer:", error);
 
             await callback({
@@ -71,17 +75,17 @@ export const transferAction: Action = {
                 user: "assistant",
                 content: {
                     text: "I'll help you transfer 1 HBAR to 0.0.4515512",
-                    action: "TRANSFER_HBAR",
+                    action: "HEDERA_TRANSFER_HBAR",
                 },
             },
             {
                 user: "user",
                 content: {
                     text: "Transfer 1 HBAR to 0.0.4515512",
-                    action: "TRANSFER_HBAR",
+                    action: "HEDERA_TRANSFER_HBAR",
                 },
             },
         ],
     ],
-    similes: ["SEND_HBAR", "HBAR_TRANSFER", "MOVE_HBAR"],
+    similes: ["TRANSFER_HBAR", "SEND_HBAR", "HBAR_TRANSFER", "MOVE_HBAR"],
 };

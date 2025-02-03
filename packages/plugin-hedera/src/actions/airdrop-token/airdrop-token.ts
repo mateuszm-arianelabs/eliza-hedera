@@ -15,7 +15,7 @@ import { airdropTokenParamsSchema } from "./schema.ts";
 import { AirdropTokenService } from "./services/airdrop-token.ts";
 
 export const airdropTokenAction: Action = {
-    name: "AIRDROP_TOKEN",
+    name: "HEDERA_AIRDROP_TOKEN",
     description: "Airdrop a token on the Hedera network",
     handler: async (
         runtime: IAgentRuntime,
@@ -75,17 +75,17 @@ export const airdropTokenAction: Action = {
                 user: "assistant",
                 content: {
                     text: "I'll help you airdrop tokens",
-                    action: "AIRDROP_TOKEN",
+                    action: "HEDERA_AIRDROP_TOKEN",
                 },
             },
             {
                 user: "user",
                 content: {
                     text: "Airdrop 5.5 tokens 0.0.5425085 for 0.0.5398121, 0.0.5393967, 0.0.5395127",
-                    action: "AIRDROP_TOKEN",
+                    action: "HEDERA_AIRDROP_TOKEN",
                 },
             },
         ],
     ],
-    similes: ["DROP_TOKEN", "DROP_TOKENS", "AIRDROP_TOKENS"],
+    similes: ["DROP_TOKEN", "AIRDROP_TOKEN", "AIRDROP_TOKENS"],
 };

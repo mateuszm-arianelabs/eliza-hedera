@@ -234,6 +234,7 @@ Respond with a JSON markdown block containing only the extracted values. All fie
     "tokenId": string, // Id of token to send as a string.
     "toAccountId": string, // Recipient account Id specified as a string.
     "amount": number // Amount of tokens to send as number.
+}
 \`\`\`
 
 Example reponse for the input: "Make transfer 3.10 of tokens 0.0.5425085 to account 0.0.4515512", the response should be:
@@ -242,6 +243,7 @@ Example reponse for the input: "Make transfer 3.10 of tokens 0.0.5425085 to acco
     "tokenId": "0.0.5425085",
     "toAccountId": "0.0.4515512",
     "amount": 3.10
+}
 \`\`\`
 
 Now respond with a JSON markdown block containing only the extracted values.
