@@ -38,8 +38,6 @@ export const pendingAirdropsAction: Action = {
         });
 
         try {
-            console.log(pendingAirdropContent);
-
             const pendingAirdropData = pendingAirdropsParams.parse(
                 pendingAirdropContent
             );

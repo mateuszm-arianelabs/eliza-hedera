@@ -121,7 +121,7 @@ If in message there is no accountId or some think that looks similar to accountI
 \`\`\`
 If message include accountId for example "0.0.5422268" extract this data with following instructions.
 1. **Account Id**
-    - Account Id should looks like "0.0.5422268" and should be string.
+    - Account Id should look like "0.0.5422268" and should be a string.
     - Account Id as string cant have other chars than numbers 0 to 9 and dots.
     - Dots cant start accountId string or end, there is always number on start and end.
     - If you cant find accountId returns structure with account id equast null.
