@@ -6,8 +6,8 @@ export type HederaHtsBalanceParams = z.infer<
 >;
 
 export type IHtsBalanceResponse = {
-    status: "success" | "error";
-    balance: number;
+    status: "SUCCESS" | "ERROR";
+    balance: string;
     unit: string;
 };
 
@@ -15,14 +15,6 @@ export type TokenBalance = {
     account: string;
     balance: number;
     decimals: number;
-};
-
-export type HtsTokenBalanceApiReponse = {
-    timestamp: string;
-    balances: TokenBalance[];
-    links: {
-        next: string;
-    };
 };
 
 type ProtobufEncodedKey = {

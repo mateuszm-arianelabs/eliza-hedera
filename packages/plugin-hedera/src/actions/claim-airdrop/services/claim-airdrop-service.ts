@@ -1,11 +1,15 @@
 import { HederaProvider } from "../../../providers/client";
 import { AccountId, PendingAirdropId, TokenId } from "@hashgraph/sdk";
 import { ClaimAirdropData } from "../types.ts";
+import { ClaimAirdropResult } from "hedera-agent-kit/dist/types";
 
 export class ClaimAirdropService {
     constructor(private hederaProvider: HederaProvider) {}
 
-    async execute(params: ClaimAirdropData, accountId: string): Promise<void> {
+    async execute(
+        params: ClaimAirdropData,
+        accountId: string
+    ): Promise<ClaimAirdropResult> {
         if (!params.tokenId) {
             throw new Error("No tokenId provided");
         }

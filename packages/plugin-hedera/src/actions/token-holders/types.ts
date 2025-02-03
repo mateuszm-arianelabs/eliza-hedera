@@ -7,7 +7,7 @@ export type HederaTokenHoldersParams = z.infer<
 >;
 
 export type TokenHoldersResult = {
-    status: "success" | "error";
+    status: "SUCCESS" | "ERROR";
     tokenId: string;
     tokenName: string;
     tokenSymbol: string;

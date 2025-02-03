@@ -41,6 +41,10 @@ export const associateTokenAction = {
             tokenId: hederaAllTokensBalancesContent.tokenId,
         };
 
+        elizaLogger.log(
+            `Extracted data: ${JSON.stringify(paramOptions, null, 2)}`
+        );
+
         try {
             const validationResult =
                 hederaAssociateTokenParamsSchema.safeParse(paramOptions);

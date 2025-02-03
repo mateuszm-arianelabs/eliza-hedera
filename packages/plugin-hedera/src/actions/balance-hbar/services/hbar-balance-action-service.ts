@@ -26,7 +26,7 @@ export class HbarBalanceActionService {
         const balance = await agentKit.getHbarBalance(params.address);
 
         return {
-            status: "success",
+            status: "SUCCESS",
             balance: balance,
             unit: "HBAR",
         };

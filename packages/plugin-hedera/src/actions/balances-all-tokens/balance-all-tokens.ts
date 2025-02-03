@@ -49,6 +49,10 @@ export const balancesAllTokensAction = {
             const validationResult =
                 hederaAllTokensBalancesParamsSchema.safeParse(paramOptions);
 
+            elizaLogger.log(
+                `Extracted data: ${JSON.stringify(paramOptions, null, 2)}`
+            );
+
             if (!validationResult.success) {
                 throw new Error(
                     `Validation failed: ${validationResult.error.errors.map((e) => e.message).join(", ")}`
@@ -78,7 +82,7 @@ export const balancesAllTokensAction = {
 
             let text = "";
             for (const balance of response.balancesArray) {
-                text += `${balance.tokenName}: ${balance.balanceInDisplayUnit} ${balance.tokenSymbol}\n`;
+                text += `${balance.tokenName}: ${balance.balanceInDisplayUnit} ${balance.tokenSymbol} (${balance.tokenId})\n`;
             }
 
             if (_callback && response.status === "success") {

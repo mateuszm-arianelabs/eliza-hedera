@@ -6,7 +6,7 @@ export type HederaHbarBalanceParams = z.infer<
 >;
 
 export type IHbarBalanceResponse = {
-    status: "success" | "error";
+    status: "SUCCESS" | "ERROR";
     balance: number;
     unit: string;
 };

@@ -7,6 +7,6 @@ export class GetPendingAirdropsService {
     async execute(accountId: string, networkType: HederaNetworkType) {
         const agentKit = this.hederaProvider.getHederaAgentKit();
 
-        return agentKit.getPendingAirdrops(accountId, networkType);
+        return await agentKit.getPendingAirdrops(accountId, networkType);
     }
 }

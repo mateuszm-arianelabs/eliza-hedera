@@ -41,6 +41,10 @@ export const balanceHbarAction = {
             address: hederaHbarBalanceContent.address,
         };
 
+        elizaLogger.log(
+            `Extracted data: ${JSON.stringify(paramOptions, null, 2)}`
+        );
+
         try {
             const validationResult =
                 hederaHbarBalanceParamsSchema.safeParse(paramOptions);
@@ -58,7 +62,7 @@ export const balanceHbarAction = {
             const response: IHbarBalanceResponse =
                 await action.execute(paramOptions);
 
-            if (_callback && response.status === "success") {
+            if (_callback && response.status === "SUCCESS") {
                 await _callback({
                     text: `Address ${paramOptions.address} has balance of ${response.balance} HBAR`,
                     content: {

@@ -1,11 +1,17 @@
 import { HederaProvider } from "../../../providers/client";
 import { AirdropRecipient, AirdropTokenParams } from "../types.ts";
 import { TokenId } from "@hashgraph/sdk";
+import { AirdropResult } from "hedera-agent-kit/dist/types";
+import { toBaseUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
+import { HederaNetworkType } from "../../../shared/types.ts";
 
 export class AirdropTokenService {
     constructor(private hederaProvider: HederaProvider) {}
 
-    async execute(params: AirdropTokenParams): Promise<void> {
+    async execute(
+        params: AirdropTokenParams,
+        networkType: HederaNetworkType
+    ): Promise<AirdropResult> {
         if (!params.tokenId) {
             throw new Error("Missing tokenId");
         }
@@ -20,12 +26,20 @@ export class AirdropTokenService {
 
         const tokenId = TokenId.fromString(params.tokenId);
 
-        const recipients: AirdropRecipient[] = params.recipients.map((r) => ({
-            accountId: r,
-            amount: params.amount,
-        }));
+        const recipients: AirdropRecipient[] = await Promise.all(
+            params.recipients.map(async (r) => ({
+                accountId: r,
+                amount: (
+                    await toBaseUnit(
+                        tokenId.toString(),
+                        params.amount,
+                        networkType
+                    )
+                ).toNumber(),
+            }))
+        );
 
         const agentKit = this.hederaProvider.getHederaAgentKit();
-        return agentKit.airdropToken(tokenId, recipients);
+        return await agentKit.airdropToken(tokenId, recipients);
     }
 }

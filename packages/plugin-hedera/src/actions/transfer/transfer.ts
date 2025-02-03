@@ -13,6 +13,8 @@ import { hederaHBARTransferTemplate } from "../../templates";
 import { HederaProvider } from "../../providers/client";
 import { TransferHbarService } from "./services/transfer-hbar.ts";
 import { transferDataParamsSchema } from "./schema.ts";
+import { generateHashscanUrl } from "../../shared/utils.ts";
+import { HederaNetworkType } from "../../shared/types.ts";
 
 export const transferAction: Action = {
     name: "TRANSFER_HBAR",
@@ -37,18 +39,30 @@ export const transferAction: Action = {
                 modelClass: ModelClass.SMALL,
             });
 
+            elizaLogger.log(
+                `Extracted data: ${JSON.stringify(hederaTransferContent, null, 2)}`
+            );
+
             const hederaTransferData = transferDataParamsSchema.parse(
                 hederaTransferContent
             );
 
             const hederaProvider = new HederaProvider(runtime);
+            const networkType = runtime.getSetting(
+                "HEDERA_NETWORK_TYPE"
+            ) as HederaNetworkType;
+
             const transferHbarService = new TransferHbarService(hederaProvider);
 
-            const tx = await transferHbarService.execute(hederaTransferData);
+            const response =
+                await transferHbarService.execute(hederaTransferData);
 
-            await callback({
-                text: `HBAR transfer successfully. ${tx.toString()}`,
-            });
+            if (callback && response.status === "SUCCESS") {
+                const url = generateHashscanUrl(response.txHash, networkType);
+                await callback({
+                    text: `Transfer of ${hederaTransferData.amount} HBAR to ${hederaTransferData.accountId} completed.\nTransaction link: ${url}`,
+                });
+            }
 
             return true;
         } catch (error) {
