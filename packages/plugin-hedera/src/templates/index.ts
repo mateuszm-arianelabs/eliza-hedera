@@ -246,3 +246,36 @@ Example reponse for the input: "Make transfer 3.10 of tokens 0.0.5425085 to acco
 
 Now respond with a JSON markdown block containing only the extracted values.
 `;
+
+export const hederaCreateTopicTemplate = `Given the recent messages and hedera wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+Extract the following information about the new topic:
+1. **Topic memo**:
+   - Extract string representing memo of topic.
+   - The value must be a string, may be single or multiple words.
+   - Example topic memo: "crypto", "token transfer logs"
+
+Respond with a JSON markdown block containing only the extracted values. All fields are required:
+\`\`\`json
+{
+    "memo": string // String representing memo of topic.
+}
+\`\`\`
+
+Example reponse for the input: "Create new topic with crypto memo", the response should be:
+\`\`\`json
+{
+    "memo": "crypto"
+}
+\`\`\`
+
+Example reponse for the input: "Create new topic with memo token transfer logs", the response should be:
+\`\`\`json
+{
+    "memo": "token transfer logs"
+}
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;
