@@ -279,3 +279,37 @@ Example reponse for the input: "Create new topic with memo token transfer logs",
 
 Now respond with a JSON markdown block containing only the extracted values.
 `;
+
+export const hederaDeleteTopicTemplate = `Given the recent messages and hedera wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+Extract the following information about the topic to delete:
+1. **Topic Id**
+    - Topic Id should look like "0.0.5422268" and should be a string.
+    - Topic Id as string cant have other chars than numbers 0 to 9 and dots.
+    - Dots can't start Topic Id string or end, there is always a number on the start and end.
+    - Example topic ids are "0.0.5422268", "0.0.4515756"
+
+Respond with a JSON markdown block containing only the extracted values. All fields are required:
+\`\`\`json
+{
+    "topicId": string // String representing topicId
+}
+\`\`\`
+
+Example reponse for the input: "Delete topic 0.0.5464449", the response should be:
+\`\`\`json
+{
+    "topicId": "0.0.5464449"
+}
+\`\`\`
+
+Example reponse for the input: "Delete topic 0.0.5464185", the response should be:
+\`\`\`json
+{
+    "memo": "0.0.5464185"
+}
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;
