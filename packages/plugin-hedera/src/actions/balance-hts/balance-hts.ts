@@ -136,7 +136,7 @@ export const balanceHtsAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Show me balance of HTS-TOKEN with id 0.0.5422268 for wallet 0.0.5423949. Call HEDERA_HTS_BALANCE action",
+                    text: "Show me balance of hts-token with id 0.0.5422268 for wallet 0.0.5423949. Call HEDERA_HTS_BALANCE action",
                     action: "HEDERA_HTS_BALANCE",
                 },
             },
@@ -152,7 +152,7 @@ export const balanceHtsAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Show me balance of {{HTS-TOKEN}} with id {{0.0.5422268}} for wallet {{0.0.5423949}}.",
+                    text: "Show me balance of hts token with id {{0.0.5422268}} for wallet {{0.0.5423949}}.",
                     action: "HEDERA_HTS_BALANCE",
                 },
             },
