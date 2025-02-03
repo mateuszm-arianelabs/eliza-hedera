@@ -109,3 +109,58 @@ Example reponse for the input: "Airdrop 5.5 tokens 0.0.5425085 for 0.0.5398121, 
 
 Now respond with a JSON markdown block containing only the extracted values.
 `;
+
+export const pendingAirdropTemplate = `Given the recent messages and wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+If in message there is no accountId or some think that looks similar to accountId for example: "0.0.5422268", return this json.
+\`\`\`json
+{
+    "accountId": null
+}
+\`\`\`
+If message include accountId for example "0.0.5422268" extract this data with following instructions.
+1. **Account Id**
+    - Account Id should look like "0.0.5422268" and should be a string.
+    - Account Id as string cant have other chars than numbers 0 to 9 and dots.
+    - Dots cant start accountId string or end, there is always number on start and end.
+    - If you cant find accountId returns structure with account id equast null.
+    - Example account ids are "0.0.5422268", "0.0.4515756"
+
+Respond with a JSON markdown block containing only the extracted values. accountId:
+\`\`\`json
+{
+    "accountId": string | null   // The accountId for example "0.0.4515756" or if doesnt exist null
+}
+\`\`\`
+
+Example response for the input: "Show me my pending airdrops", the response should be:
+\`\`\`json
+{
+    "accountId": null
+}
+\`\`\`
+
+Example response for the input: "Show me my airdrops", the response should be:
+\`\`\`json
+{
+    "accountId": null
+}
+\`\`\`
+
+Example response for the input: "Show pending airdrops for 0.0.4515756", the response should be:
+\`\`\`json
+{
+    "accountId": "0.0.4515756"
+}
+\`\`\`
+
+Example response for the input: "Show me airdrops for 0.0.5422268", the response should be:
+\`\`\`json
+{
+    "accountId": "0.0.5422268"
+}
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;
