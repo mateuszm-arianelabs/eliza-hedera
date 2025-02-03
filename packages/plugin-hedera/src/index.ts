@@ -13,6 +13,7 @@ import { pendingAirdropsAction } from "./actions/pending-airdrops/pending-airdro
 import { claimAirdropAction } from "./actions/claim-airdrop/claim-airdrop.ts";
 import { transferTokenAction } from "./actions/transfer-token/transfer-token.ts";
 import { createTopicAction } from "./actions/create-topic/create-topic.ts";
+import { deleteTopicAction } from "./actions/delete-topic/delete-topic.ts";
 
 export const hederaPlugin: Plugin = {
     name: "Hedera",
@@ -34,6 +35,7 @@ export const hederaPlugin: Plugin = {
         claimAirdropAction,
         transferTokenAction,
         createTopicAction,
+        deleteTopicAction,
     ],
 };
 

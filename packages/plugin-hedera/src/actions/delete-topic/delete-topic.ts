@@ -9,14 +9,14 @@ import {
     ModelClass,
     type State,
 } from "@elizaos/core";
-import { hederaCreateTopicTemplate } from "../../templates";
-import { createTopicParamsSchema } from "./schema.ts";
+import { hederaDeleteTopicTemplate } from "../../templates";
 import { HederaProvider } from "../../providers/client";
-import { CreateTopicService } from "./services/create-topic.ts";
+import { deleteTopicParamsSchema } from "./schema.ts";
+import { DeleteTopicService } from "./services/delete-topic.ts";
 
-export const createTopicAction: Action = {
-    name: "HEDERA_CREATE_TOPIC",
-    description: "Create topic with hedera consensus service for messaging.",
+export const deleteTopicAction: Action = {
+    name: "HEDERA_DELETE_TOPIC",
+    description: "Delete topic with hedera consensus service.",
     handler: async (
         runtime: IAgentRuntime,
         _message: Memory,
@@ -25,37 +25,37 @@ export const createTopicAction: Action = {
         callback?: HandlerCallback
     ) => {
         try {
-            const createTopicContext = composeContext({
+            const deleteTopicContext = composeContext({
                 state,
-                template: hederaCreateTopicTemplate,
+                template: hederaDeleteTopicTemplate,
                 templatingEngine: "handlebars",
             });
 
-            const createTopicContent = await generateObjectDeprecated({
+            const deleteTopicContent = await generateObjectDeprecated({
                 runtime: runtime,
-                context: createTopicContext,
+                context: deleteTopicContext,
                 modelClass: ModelClass.SMALL,
             });
 
-            const createTopicData =
-                createTopicParamsSchema.parse(createTopicContent);
+            const deleteTopicData =
+                deleteTopicParamsSchema.parse(deleteTopicContent);
 
             const hederaProvider = new HederaProvider(runtime);
-            const action = new CreateTopicService(hederaProvider);
+            const action = new DeleteTopicService(hederaProvider);
 
-            const newTopicId = await action.execute(createTopicData);
+            await action.execute(deleteTopicData);
 
             await callback({
-                text: `Created new topic with id: ${newTopicId.toString()}`,
-                context: { newTopicId },
+                text: `Topic with id: ${deleteTopicData.topicId} deleted successfully.`,
+                context: { deletedTopicId: deleteTopicData.topicId },
             });
 
             return true;
         } catch (error) {
-            elizaLogger.error("Error during topic creation:", error);
+            elizaLogger.error("Error during topic deletion:", error);
 
             await callback({
-                text: `Error during topic creation: ${error.message}`,
+                text: `Error during topic deletion: ${error.message}`,
                 content: { error: error.message },
             });
 
@@ -74,15 +74,15 @@ export const createTopicAction: Action = {
             {
                 user: "assistant",
                 content: {
-                    text: "I'll help you create new with memo: crypto",
-                    action: "HEDERA_CREATE_TOPIC",
+                    text: "I'll help you delete topic: {{0.0.5464449}}",
+                    action: "HEDERA_DELETE_TOPIC",
                 },
             },
             {
                 user: "user",
                 content: {
-                    text: "Create new topic with {{crypto}} memo",
-                    action: "HEDERA_CREATE_TOPIC",
+                    text: "Delete topic with id {{0.0.5464449}}",
+                    action: "HEDERA_DELETE_TOPIC",
                 },
             },
         ],
@@ -90,18 +90,18 @@ export const createTopicAction: Action = {
             {
                 user: "assistant",
                 content: {
-                    text: "I'll help you create new with memo: crypto",
-                    action: "HEDERA_CREATE_TOPIC",
+                    text: "I'll help you delete topic: {{0.0.5464185}}",
+                    action: "HEDERA_DELETE_TOPIC",
                 },
             },
             {
                 user: "user",
                 content: {
-                    text: 'Create for me new topic with memo "{{MyToken transaction logs}}"',
-                    action: "HEDERA_CREATE_TOPIC",
+                    text: "Delete topic with id {{0.0.5464185}}",
+                    action: "HEDERA_DELETE_TOPIC",
                 },
             },
         ],
     ],
-    similes: ["CREATE_TOPIC", "NEW_TOPIC", "HEDERA_NEW_TOPIC"],
+    similes: ["DELETE_TOPIC", "REMOVE_TOPIC", "HEDERA_REMOVE_TOPIC"],
 };
