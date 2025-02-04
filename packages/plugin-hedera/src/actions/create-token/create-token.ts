@@ -54,7 +54,8 @@ export const createTokenAction: Action = {
 
             const createTokenService = new CreateTokenService(hederaProvider);
 
-            const response = await createTokenService.execute(createTokenData);
+            const response =
+                await createTokenService.execute(createTokenData);
 
             if (callback && response.status === "SUCCESS") {
                 const url = generateHashscanUrl(response.txHash, networkType);

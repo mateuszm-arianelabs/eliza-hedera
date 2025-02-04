@@ -185,9 +185,12 @@ Calling relevant action to retrieve token balances. Please wait...
 
 ```
 Address 0.0.5392887 has following token balances:
-SuperHederaToken: 123 SHT (0.0.5465304)
-SuperHederaToken2: 0.123 SHT2 (0.0.5463947)
-TokenTokenToken: 0 TTT (0.0.5451416)
+ExampleToken: 0 EXT
+AirDrop Token2: 9990 ADT2
+AirDrop Token: 10000 ADT
+HIP-904 FT: 0 HIP904FT
+Test Token test : 0 HTT
+Test Token: 0 HTT
 ```
 
 Below is presented a flow of using All tokens balance action without wallet address provided.
@@ -207,10 +210,14 @@ Calling relevant action to retrieve token balances. Please wait...
 3. Action's callback response:
 
 ```
-Address 0.0.4515756 has following token balances:
-SuperHederaToken: 123 SHT (0.0.5465304)
-SuperHederaToken2: 0.123 SHT2 (0.0.5463947)
-TokenTokenToken: 0 TTT (0.0.5451416)
+Address 0.0.5393196 has following token balances:
+TokenTokenToken: 0.1 TTT
+SkyCredits: 0.000025 SKC
+MyToken: 2.1 MTK
+CryptoCoin: 0.05 CCN
+HederaDollar: 99.676 H$
+kolor: 999800 KLR
+MyToken: 0.00001 MTK
 ```
 
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. `0.0.5423981`).
@@ -340,8 +347,7 @@ Calling CREATE_TOKEN action to create a new token with name NotMyToken, symbol N
 3. Action's callback response:
 
 ```
-Created new token with id: 0.0.5466186
-Transaction link: https://hashscan.io/testnet/tx/0.0.4515756@1738597103.627381422
+Created new token with id: 0.0.5450092
 ```
 Examples of other supported requests for this action:
 ```
@@ -357,7 +363,7 @@ Launch a new HTS token called SkyCredits with ticker SKC, 9 decimal places, and 
 Create token action allows to create a new fungible token on the Hedera network.
 Note that this action takes three mandatory parameters:
 - **Token id** - id token to airdrop
-- **amount** - amount of token in given in display format
+- **amount** - amount of token in given in {denom format?? Implementation should be later changed to accept display unit format}
 - **recipients** - array of account ids of recipients
 
 #### Example Prompts
@@ -367,7 +373,7 @@ Below is presented a flow of using Airdrop Token action
 1. User input:
 
 ```
-Airdrop 1 token 0.0.5451032 to 0.0.5450165 and 0.0.5450137
+Airdrop 100 tokens 0.0.5450181 to 0.0.5450165 and 0.0.5450137.
 ```
 
 2. LLM response - action execution:
@@ -380,7 +386,6 @@ Calling relevant action. Please wait...
 
 ```
 Airdrop token successfully executed.
-Transaction link: https://hashscan.io/testnet/tx/0.0.4515756@1738596798.592091234
 ```
 
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
@@ -420,8 +425,7 @@ Calling relevant action. Please wait...
 3. Action's callback response:
 
 ```
-Successfully rejected token: 0.0.5445541.
-Transaction link: https://hashscan.io/testnet/tx/0.0.5393196@1738313027.916224718
+Successfully rejected token: 0.0.5445541. Tx hash: 0.0.5393196@1738313027.916224718
 ```
 
 Currently, plugin supports rejecting only one token at once.
@@ -461,7 +465,7 @@ Calling relevant action. Please wait...
 
 ```
 Token 0.0.5450063 has been associated with account.
-Transaction hash: 0.0.4515756@1738596874.656679417
+Transaction hash: f2601d4fdb986f412f7ef1342d9b943fd16ff39029b0f8c054ffb5dffe0b2ef25914da9d2662159fe7883c5f47bed3cc
 ```
 
 Currently, plugin supports associating with only one token for one prompt.
@@ -500,8 +504,7 @@ Calling relevant action. Please wait...
 3. Action's callback response:
 
 ```
-Transfer of 100 HBAR to 0.0.5392887 completed.
-Transaction link: https://hashscan.io/testnet/tx/0.0.4515756@1738597055.620832205
+HBAR transfer successfully. 0.0.5393196@1738317322.326410854
 ```
 
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).

@@ -14,8 +14,8 @@ Always try to extract the information from last message! Do not use previously c
 Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
 \`\`\`json
 {
-    "amount": string, // The amount to transfer as a string.
-    "accountId": string // The recipient's accountId.
+    "amount": string,
+    "accountId": string
 }
 \`\`\`
 
@@ -54,10 +54,10 @@ Always try to extract the information from last message! Do not use previously c
 Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
 \`\`\`json
 {
-    "name": string, // Name of the new token to create.
-    "symbol": string, // Token symbol as uppercase short string
-    "decimals": number, // Token decimals as number.
-    "initialSupply": number // Initial supply of fungible tokens
+    "name": string,
+    "symbol": string,
+    "decimals": number,
+    "initialSupply": number
 }
 \`\`\`
 
@@ -97,9 +97,9 @@ Respond with a JSON markdown block containing only the extracted values.
 All fields are required, recipients array should have minimum one accountId(string):
 \`\`\`json
 {
-    "tokenId": string, // TokenId to airdrop
-    "recipients": string[], // Recipients is array of accountIds(string)
-    "amount": number // Token amount to send to recipients.
+    "tokenId": string,
+    "recipients": string[],
+    "amount": number
 }
 \`\`\`
 
@@ -256,6 +256,73 @@ Example reponse for the input: "Make transfer 3.10 of tokens 0.0.5425085 to acco
     "tokenId": "0.0.5425085",
     "toAccountId": "0.0.4515512",
     "amount": 3.10
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;
+
+export const hederaCreateTopicTemplate = `Given the recent messages and hedera wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+Extract the following information about the new topic:
+1. **Topic memo**:
+   - Extract string representing memo of topic.
+   - The value must be a string, may be single or multiple words.
+   - Example topic memo: "crypto", "token transfer logs"
+
+Respond with a JSON markdown block containing only the extracted values. All fields are required:
+\`\`\`json
+{
+    "memo": string // String representing memo of topic.
+}
+\`\`\`
+
+Example reponse for the input: "Create new topic with crypto memo", the response should be:
+\`\`\`json
+{
+    "memo": "crypto"
+}
+\`\`\`
+
+Example reponse for the input: "Create new topic with memo token transfer logs", the response should be:
+\`\`\`json
+{
+    "memo": "token transfer logs"
+}
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;
+
+export const hederaDeleteTopicTemplate = `Given the recent messages and hedera wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+Extract the following information about the topic to delete:
+1. **Topic Id**
+    - Topic Id should look like "0.0.5422268" and should be a string.
+    - Topic Id as string cant have other chars than numbers 0 to 9 and dots.
+    - Dots can't start Topic Id string or end, there is always a number on the start and end.
+    - Example topic ids are "0.0.5422268", "0.0.4515756"
+
+Respond with a JSON markdown block containing only the extracted values. All fields are required:
+\`\`\`json
+{
+    "topicId": string // String representing topicId
+}
+\`\`\`
+
+Example reponse for the input: "Delete topic 0.0.5464449", the response should be:
+\`\`\`json
+{
+    "topicId": "0.0.5464449"
+}
+\`\`\`
+
+Example reponse for the input: "Delete topic 0.0.5464185", the response should be:
+\`\`\`json
+{
+    "memo": "0.0.5464185"
+}
 \`\`\`
 
 Now respond with a JSON markdown block containing only the extracted values.
