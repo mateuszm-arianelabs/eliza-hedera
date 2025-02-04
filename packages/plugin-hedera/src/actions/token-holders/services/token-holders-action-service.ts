@@ -6,6 +6,8 @@ import {
     HtsTokenDetails,
     TokenBalance,
 } from "hedera-agent-kit/dist/types";
+import { toBaseUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
+import { TxStatus } from "../../../shared/constants.ts";
 
 export class TokenHoldersActionService {
     constructor(private hederaProvider: HederaProvider) {}
@@ -20,11 +22,20 @@ export class TokenHoldersActionService {
 
         const agentKit: HederaAgentKit =
             this.hederaProvider.getHederaAgentKit();
+
+        const thresholdBaseUnit = params.threshold
+            ? await toBaseUnit(
+                  params.tokenId,
+                  params.threshold,
+                  networkType
+              ).then((num) => num.toNumber())
+            : undefined;
+
         const balancesArray: Array<TokenBalance> =
             await agentKit.getTokenHolders(
                 params.tokenId,
                 networkType,
-                params.threshold
+                thresholdBaseUnit
             );
 
         const tokenDetails: HtsTokenDetails = await agentKit.getHtsTokenDetails(
@@ -33,7 +44,7 @@ export class TokenHoldersActionService {
         );
 
         return {
-            status: "success",
+            status: TxStatus.SUCCESS,
             tokenId: params.tokenId,
             tokenName: tokenDetails.name,
             tokenSymbol: tokenDetails.symbol,

@@ -13,6 +13,8 @@ import { hederaTransferTokenTemplate } from "../../templates";
 import { TransferTokenService } from "./services/transfer-token.ts";
 import { transferTokenParamsSchema } from "./schema.ts";
 import { HederaProvider } from "../../providers/client";
+import { generateHashscanUrl } from "../../shared/utils.ts";
+import { HederaNetworkType } from "../../shared/types.ts";
 
 export const transferTokenAction: Action = {
     name: "TRANSFER_TOKEN",
@@ -43,9 +45,23 @@ export const transferTokenAction: Action = {
             );
 
             const hederaProvider = new HederaProvider(runtime);
+            const networkType = runtime.getSetting(
+                "HEDERA_NETWORK_TYPE"
+            ) as HederaNetworkType;
+
             const action = new TransferTokenService(hederaProvider);
 
-            await action.execute(hederaTokenTransferData);
+            const response = await action.execute(
+                hederaTokenTransferData,
+                networkType
+            );
+
+            if (callback && response.status === "SUCCESS") {
+                const url = generateHashscanUrl(response.txHash, networkType);
+                await callback({
+                    text: `Transfer of token ${hederaTokenTransferData.tokenId} to ${hederaTokenTransferData.toAccountId} completed.\nTransaction link: ${url}`,
+                });
+            }
 
             return true;
         } catch (error) {

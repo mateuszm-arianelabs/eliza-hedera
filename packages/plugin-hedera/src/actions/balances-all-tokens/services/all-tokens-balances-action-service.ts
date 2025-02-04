@@ -8,6 +8,7 @@ import {
     DetailedTokenBalance,
     HederaNetworkType,
 } from "hedera-agent-kit/dist/types";
+import { TxStatus } from "../../../shared/constants.ts";
 
 export class AllTokensBalancesActionService {
     constructor(private hederaProvider: HederaProvider) {}
@@ -26,7 +27,7 @@ export class AllTokensBalancesActionService {
             await agentKit.getAllTokensBalances(networkType, params.address);
 
         return {
-            status: "success",
+            status: TxStatus.SUCCESS,
             balancesArray: balancesArray,
         };
     }

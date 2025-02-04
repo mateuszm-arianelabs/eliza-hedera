@@ -1,16 +1,21 @@
 import {
     Action,
-    composeContext, elizaLogger,
+    composeContext,
+    elizaLogger,
     generateObjectDeprecated,
     HandlerCallback,
     type IAgentRuntime,
-    type Memory, ModelClass,
+    type Memory,
+    ModelClass,
     type State,
 } from "@elizaos/core";
 import { hederaCreateTokenTemplate } from "../../templates";
 import { HederaProvider } from "../../providers/client";
 import { CreateTokenService } from "./services/create-token.ts";
 import { createTokenParamsSchema } from "./schema.ts";
+import { generateHashscanUrl } from "../../shared/utils.ts";
+import { HederaNetworkType } from "../../shared/types.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const createTokenAction: Action = {
     name: "HEDERA_CREATE_TOKEN",
@@ -39,16 +44,25 @@ export const createTokenAction: Action = {
                 hederaCreateTokenContent
             );
 
+            elizaLogger.log(
+                `Extracted data: ${JSON.stringify(createTokenData, null, 2)}`
+            );
+
             const hederaProvider = new HederaProvider(runtime);
+            const networkType = runtime.getSetting(
+                "HEDERA_NETWORK_TYPE"
+            ) as HederaNetworkType;
+
             const createTokenService = new CreateTokenService(hederaProvider);
 
-            const newTokenId =
-                await createTokenService.execute(createTokenData);
+            const response = await createTokenService.execute(createTokenData);
 
-            await callback({
-                text: `Created new token with id: ${newTokenId.toString()}`,
-                context: { newTokenId },
-            });
+            if (callback && response.status === TxStatus.SUCCESS) {
+                const url = generateHashscanUrl(response.txHash, networkType);
+                await callback({
+                    text: `Created new token with id: ${response.tokenId.toString()}\nTransaction link: ${url}`,
+                });
+            }
 
             return true;
         } catch (error) {

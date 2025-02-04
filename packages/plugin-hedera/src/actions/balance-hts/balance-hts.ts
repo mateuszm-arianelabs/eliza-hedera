@@ -14,6 +14,7 @@ import { balanceHtsTemplate } from "../../templates/templates.ts";
 import { HtsBalanceActionService } from "./services/hts-balance-action-service.ts";
 import { HederaHtsBalanceParams, IHtsBalanceResponse } from "./types.ts";
 import { HederaNetworkType } from "../../shared/types.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const balanceHtsAction = {
     name: "HEDERA_HTS_BALANCE",
@@ -23,7 +24,7 @@ export const balanceHtsAction = {
         _message: Memory,
         state: State,
         _options: { [key: string]: unknown },
-        _callback?: HandlerCallback
+        callback?: HandlerCallback
     ) => {
         const hederaHtsBalanceContext = composeContext({
             state: state,
@@ -41,6 +42,10 @@ export const balanceHtsAction = {
             tokenId: hederaHtsBalanceContent.tokenId,
             address: hederaHtsBalanceContent.address,
         };
+
+        elizaLogger.log(
+            `Extracted data: ${JSON.stringify(paramOptions, null, 2)}`
+        );
 
         try {
             const validationResult =
@@ -64,8 +69,8 @@ export const balanceHtsAction = {
                 networkType
             );
 
-            if (_callback && response.status === "success") {
-                await _callback({
+            if (callback && response.status === TxStatus.SUCCESS) {
+                await callback({
                     text: `Address ${paramOptions.address} has balance of ${response.balance} ${response.unit} (token id: ${paramOptions.tokenId})`,
                     content: {
                         success: true,
@@ -82,8 +87,8 @@ export const balanceHtsAction = {
                 error
             );
 
-            if (_callback) {
-                await _callback({
+            if (callback) {
+                await callback({
                     text: `Error during fetching HTS token balance: ${error.message}`,
                     content: { error: error.message },
                 });

@@ -1,7 +1,9 @@
 import type { HederaHtsBalanceParams, IHtsBalanceResponse } from "../types.ts";
 import { HederaProvider } from "../../../providers/client";
 import { HederaNetworkType } from "../../../shared/types.ts";
-import {HederaAgentKit} from "hedera-agent-kit";
+import { HederaAgentKit } from "hedera-agent-kit";
+import { toDisplayUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
+import { TxStatus } from "../../../shared/constants.ts";
 
 export class HtsBalanceActionService {
     constructor(private hederaProvider: HederaProvider) {
@@ -25,8 +27,12 @@ export class HtsBalanceActionService {
         );
 
         return {
-            status: "success",
-            balance: balance,
+            status: TxStatus.SUCCESS,
+            balance: await toDisplayUnit(
+                params.tokenId,
+                balance,
+                networkType
+            ).then((b) => b.toString()),
             unit: tokenDetails.name,
         };
     }

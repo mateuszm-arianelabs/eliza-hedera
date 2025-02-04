@@ -14,6 +14,8 @@ import { HederaNetworkType } from "../../shared/types.ts";
 import { pendingAirdropTemplate } from "../../templates";
 import { pendingAirdropsParams } from "./schema.ts";
 import { GetPendingAirdropsService } from "./services/get-pending-airdrops.ts";
+import { toDisplayUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
+import { get_hts_token_details } from "hedera-agent-kit/dist/tools/hts/queries";
 
 export const pendingAirdropsAction: Action = {
     name: "HEDERA_PENDING_AIRDROPS",
@@ -23,7 +25,7 @@ export const pendingAirdropsAction: Action = {
         _message: Memory,
         state: State,
         _options: { [key: string]: unknown },
-        _callback?: HandlerCallback
+        callback?: HandlerCallback
     ) => {
         const pendingAirdropsContext = composeContext({
             state: state,
@@ -36,6 +38,10 @@ export const pendingAirdropsAction: Action = {
             context: pendingAirdropsContext,
             modelClass: ModelClass.SMALL,
         });
+
+        elizaLogger.log(
+            `Extracted data: ${JSON.stringify(pendingAirdropsContext, null, 2)}`
+        );
 
         try {
             const pendingAirdropData = pendingAirdropsParams.parse(
@@ -59,22 +65,30 @@ export const pendingAirdropsAction: Action = {
             );
 
             if (!pendingAirdrops.length) {
-                await _callback({
-                    text: `There is no pending airdrops for accountId ${accountId}`,
-                    content: `There is no pending airdrops for accountId ${accountId}`,
+                await callback({
+                    text: `There are no pending airdrops for accountId ${accountId}`,
+                    content: `There are no pending airdrops for accountId ${accountId}`,
                 });
                 return true;
             }
 
-            const formatedAirdrops = pendingAirdrops
-                .map(
-                    (d, idx) =>
-                        `(${idx + 1}) ${d.amount} Tokens (${d.token_id}) from ${d.sender_id}`
-                )
-                .join("\n");
+            const formatedAirdrops = await Promise.all(
+                pendingAirdrops.map(async (airdrop, index) => {
+                    const tokenDetails = await get_hts_token_details(
+                        airdrop.token_id,
+                        networkType
+                    );
+                    const displayAmount = await toDisplayUnit(
+                        airdrop.token_id,
+                        airdrop.amount,
+                        networkType
+                    );
+                    return `(${index + 1}) ${displayAmount.toString()} ${tokenDetails.symbol} (token id: ${airdrop.token_id}) from ${airdrop.sender_id}`;
+                })
+            ).then((results) => results.join("\n"));
 
-            await _callback({
-                text: `Here is pending airdrops for account ${accountId} \n\n ${formatedAirdrops}`,
+            await callback({
+                text: `Here are pending airdrops for account ${accountId} \n\n ${formatedAirdrops}`,
                 content: {
                     availableAirdrops: pendingAirdrops,
                 },
@@ -84,8 +98,8 @@ export const pendingAirdropsAction: Action = {
         } catch (error) {
             elizaLogger.error("Error during fetching pending airdrops:", error);
 
-            if (_callback) {
-                await _callback({
+            if (callback) {
+                await callback({
                     text: `Error during fetching pending airdrops: ${error.message}`,
                     content: { error: error.message },
                 });

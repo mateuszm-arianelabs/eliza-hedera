@@ -1,11 +1,17 @@
 import { HederaProvider } from "../../../providers/client";
 import { TransferTokenParams } from "../types.ts";
 import { TokenId } from "@hashgraph/sdk";
+import { TransferTokenResult } from "hedera-agent-kit/src/types";
+import { toBaseUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
+import { HederaNetworkType } from "../../../shared/types.ts";
 
 export class TransferTokenService {
     constructor(private hederaProvider: HederaProvider) {}
 
-    async execute(params: TransferTokenParams): Promise<void> {
+    async execute(
+        params: TransferTokenParams,
+        networkType: HederaNetworkType
+    ): Promise<TransferTokenResult> {
         if (!params.tokenId) {
             throw new Error("Missing tokenId");
         }
@@ -25,7 +31,9 @@ export class TransferTokenService {
         return agentKit.transferToken(
             tokenId,
             params.toAccountId,
-            params.amount
+            await toBaseUnit(params.tokenId, params.amount, networkType).then(
+                (a) => a.toNumber()
+            )
         );
     }
 }

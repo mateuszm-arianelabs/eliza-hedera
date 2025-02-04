@@ -13,6 +13,9 @@ import {
 import { HederaProvider } from "../../providers/client";
 import { airdropTokenParamsSchema } from "./schema.ts";
 import { AirdropTokenService } from "./services/airdrop-token.ts";
+import { generateHashscanUrl } from "../../shared/utils.ts";
+import { HederaNetworkType } from "../../shared/types.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const airdropTokenAction: Action = {
     name: "HEDERA_AIRDROP_TOKEN",
@@ -37,18 +40,32 @@ export const airdropTokenAction: Action = {
                 modelClass: ModelClass.SMALL,
             });
 
+            elizaLogger.log(
+                `Extracted data: ${JSON.stringify(hederaAirdropTokenContent, null, 2)}`
+            );
+
             const airdropTokenData = airdropTokenParamsSchema.parse(
                 hederaAirdropTokenContent
             );
 
             const hederaProvider = new HederaProvider(runtime);
+            const networkType = runtime.getSetting(
+                "HEDERA_NETWORK_TYPE"
+            ) as HederaNetworkType;
+
             const airdropTokenService = new AirdropTokenService(hederaProvider);
 
-            await airdropTokenService.execute(airdropTokenData);
+            const response = await airdropTokenService.execute(
+                airdropTokenData,
+                networkType
+            );
 
-            await callback({
-                text: `Airdrop token successfully executed.`,
-            });
+            if (callback && response.status === TxStatus.SUCCESS) {
+                const url = generateHashscanUrl(response.txHash, networkType);
+                await callback({
+                    text: `Airdrop token successfully executed.\nTransaction link: ${url}`,
+                });
+            }
 
             return true;
         } catch (error) {

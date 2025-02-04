@@ -14,6 +14,8 @@ import { HederaNetworkType } from "hedera-agent-kit/dist/types";
 import { HederaTokenHoldersParams, TokenHoldersResult } from "./types.ts";
 import { hederaTokenHoldersParamsSchema } from "./schema.ts";
 import { TokenHoldersActionService } from "./services/token-holders-action-service.ts";
+import { toDisplayUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const tokenHoldersAction = {
     name: "HEDERA_TOKEN_HOLDERS",
@@ -43,6 +45,10 @@ export const tokenHoldersAction = {
             threshold: hederaTokenHoldersContent.threshold,
         };
 
+        elizaLogger.log(
+            `Extracted data: ${JSON.stringify(paramOptions, null, 2)}`
+        );
+
         try {
             const validationResult =
                 hederaTokenHoldersParamsSchema.safeParse(paramOptions);
@@ -68,10 +74,15 @@ export const tokenHoldersAction = {
 
             let text = "";
             for (const holder of result.holdersArray) {
-                text += `${holder.account}: ${holder.balance} ${result.tokenSymbol}\n`;
+                const displayBalance = await toDisplayUnit(
+                    result.tokenId,
+                    holder.balance,
+                    networkType
+                ).then((b) => b.toString());
+                text += `${holder.account}: ${displayBalance} ${result.tokenSymbol}\n`;
             }
 
-            if (_callback && result.status === "success") {
+            if (_callback && result.status === TxStatus.SUCCESS) {
                 if (text === "") {
                     await _callback({
                         text: `Token ${paramOptions.tokenId} (${result.tokenName}) does not have any holders.`,
