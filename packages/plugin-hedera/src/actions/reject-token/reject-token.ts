@@ -15,6 +15,7 @@ import { hederaRejectTokenParamsSchema } from "./schema.ts";
 import { RejectTokenActionService } from "./service/reject-token-action-service.ts";
 import { generateHashscanUrl } from "../../shared/utils.ts";
 import { HederaNetworkType } from "../../shared/types.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const rejectTokenAction = {
     name: "HEDERA_REJECT_TOKEN",
@@ -65,7 +66,7 @@ export const rejectTokenAction = {
 
             const response = await action.execute(paramOptions);
 
-            if (_callback && response.status === "SUCCESS") {
+            if (_callback && response.status === TxStatus.SUCCESS) {
                 const url = generateHashscanUrl(response.txHash, networkType);
                 await _callback({
                     text: `Successfully rejected token: ${paramOptions.tokenId}.\nTransaction link: ${url}`,

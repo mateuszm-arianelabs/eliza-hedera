@@ -7,6 +7,7 @@ import {
     TokenBalance,
 } from "hedera-agent-kit/dist/types";
 import { toBaseUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
+import { TxStatus } from "../../../shared/constants.ts";
 
 export class TokenHoldersActionService {
     constructor(private hederaProvider: HederaProvider) {}
@@ -43,7 +44,7 @@ export class TokenHoldersActionService {
         );
 
         return {
-            status: "SUCCESS",
+            status: TxStatus.SUCCESS,
             tokenId: params.tokenId,
             tokenName: tokenDetails.name,
             tokenSymbol: tokenDetails.symbol,

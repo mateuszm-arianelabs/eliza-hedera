@@ -4,6 +4,7 @@ import type {
 } from "../types.ts";
 import { HederaProvider } from "../../../providers/client";
 import { HederaAgentKit } from "hedera-agent-kit";
+import { TxStatus } from "../../../shared/constants.ts";
 
 export class HbarBalanceActionService {
     constructor(private hederaProvider: HederaProvider) {
@@ -26,7 +27,7 @@ export class HbarBalanceActionService {
         const balance = await agentKit.getHbarBalance(params.address);
 
         return {
-            status: "SUCCESS",
+            status: TxStatus.SUCCESS,
             balance: balance,
             unit: "HBAR",
         };

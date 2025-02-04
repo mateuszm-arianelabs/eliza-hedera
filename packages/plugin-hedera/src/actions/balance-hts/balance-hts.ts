@@ -14,6 +14,7 @@ import { balanceHtsTemplate } from "../../templates/templates.ts";
 import { HtsBalanceActionService } from "./services/hts-balance-action-service.ts";
 import { HederaHtsBalanceParams, IHtsBalanceResponse } from "./types.ts";
 import { HederaNetworkType } from "../../shared/types.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const balanceHtsAction = {
     name: "HEDERA_HTS_BALANCE",
@@ -68,7 +69,7 @@ export const balanceHtsAction = {
                 networkType
             );
 
-            if (callback && response.status === "SUCCESS") {
+            if (callback && response.status === TxStatus.SUCCESS) {
                 await callback({
                     text: `Address ${paramOptions.address} has balance of ${response.balance} ${response.unit} (token id: ${paramOptions.tokenId})`,
                     content: {

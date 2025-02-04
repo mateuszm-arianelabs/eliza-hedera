@@ -15,6 +15,7 @@ import { CreateTokenService } from "./services/create-token.ts";
 import { createTokenParamsSchema } from "./schema.ts";
 import { generateHashscanUrl } from "../../shared/utils.ts";
 import { HederaNetworkType } from "../../shared/types.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const createTokenAction: Action = {
     name: "HEDERA_CREATE_TOKEN",
@@ -54,10 +55,9 @@ export const createTokenAction: Action = {
 
             const createTokenService = new CreateTokenService(hederaProvider);
 
-            const response =
-                await createTokenService.execute(createTokenData);
+            const response = await createTokenService.execute(createTokenData);
 
-            if (callback && response.status === "SUCCESS") {
+            if (callback && response.status === TxStatus.SUCCESS) {
                 const url = generateHashscanUrl(response.txHash, networkType);
                 await callback({
                     text: `Created new token with id: ${response.tokenId.toString()}\nTransaction link: ${url}`,

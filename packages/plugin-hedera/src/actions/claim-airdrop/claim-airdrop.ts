@@ -15,6 +15,7 @@ import { claimAirdropParamsSchema } from "./schema.ts";
 import { ClaimAirdropService } from "./services/claim-airdrop-service.ts";
 import { generateHashscanUrl } from "../../shared/utils.ts";
 import { HederaNetworkType } from "../../shared/types.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const claimAirdropAction: Action = {
     name: "HEDERA_CLAIM_AIRDROP",
@@ -57,7 +58,7 @@ export const claimAirdropAction: Action = {
 
             const response = await action.execute(claimAirdropData, accountId);
 
-            if (callback && response.status === "SUCCESS") {
+            if (callback && response.status === TxStatus.SUCCESS) {
                 const url = generateHashscanUrl(response.txHash, networkType);
                 await callback({
                     text: `Successfully claimed airdrop for token ${claimAirdropData.tokenId}.\nTransaction link: ${url}`,

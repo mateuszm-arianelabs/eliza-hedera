@@ -17,6 +17,7 @@ import { HederaProvider } from "../../providers/client";
 import { balancesAllTokensTemplate } from "../../templates/templates.ts";
 import { AllTokensBalancesActionService } from "./services/all-tokens-balances-action-service.ts";
 import { HederaNetworkType } from "hedera-agent-kit/dist/types";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const balancesAllTokensAction = {
     name: "HEDERA_ALL_BALANCES",
@@ -85,7 +86,7 @@ export const balancesAllTokensAction = {
                 text += `${balance.tokenName}: ${balance.balanceInDisplayUnit} ${balance.tokenSymbol} (${balance.tokenId})\n`;
             }
 
-            if (_callback && response.status === "success") {
+            if (_callback && response.status === TxStatus.SUCCESS) {
                 if (text === "") {
                     await _callback({
                         text: `Address ${paramOptions.address} does not have any token balances.`,

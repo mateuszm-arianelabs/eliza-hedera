@@ -15,6 +15,7 @@ import { airdropTokenParamsSchema } from "./schema.ts";
 import { AirdropTokenService } from "./services/airdrop-token.ts";
 import { generateHashscanUrl } from "../../shared/utils.ts";
 import { HederaNetworkType } from "../../shared/types.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const airdropTokenAction: Action = {
     name: "HEDERA_AIRDROP_TOKEN",
@@ -59,7 +60,7 @@ export const airdropTokenAction: Action = {
                 networkType
             );
 
-            if (callback && response.status === "SUCCESS") {
+            if (callback && response.status === TxStatus.SUCCESS) {
                 const url = generateHashscanUrl(response.txHash, networkType);
                 await callback({
                     text: `Airdrop token successfully executed.\nTransaction link: ${url}`,

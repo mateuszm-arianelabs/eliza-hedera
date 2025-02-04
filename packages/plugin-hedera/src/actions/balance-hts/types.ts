@@ -1,12 +1,13 @@
 import { z } from "zod";
 import { hederaHtsBalanceParamsSchema } from "./schema.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export type HederaHtsBalanceParams = z.infer<
     typeof hederaHtsBalanceParamsSchema
 >;
 
 export type IHtsBalanceResponse = {
-    status: "SUCCESS" | "ERROR";
+    status: TxStatus.SUCCESS;
     balance: string;
     unit: string;
 };

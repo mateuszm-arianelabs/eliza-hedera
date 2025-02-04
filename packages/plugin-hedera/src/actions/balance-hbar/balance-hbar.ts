@@ -13,6 +13,7 @@ import { hederaHbarBalanceParamsSchema } from "./schema.ts";
 import { HederaProvider } from "../../providers/client";
 import { HbarBalanceActionService } from "./services/hbar-balance-action-service.ts";
 import { balanceHbarTemplate } from "../../templates/templates.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const balanceHbarAction = {
     name: "HEDERA_HBAR_BALANCE",
@@ -62,7 +63,7 @@ export const balanceHbarAction = {
             const response: IHbarBalanceResponse =
                 await action.execute(paramOptions);
 
-            if (_callback && response.status === "SUCCESS") {
+            if (_callback && response.status === TxStatus.SUCCESS) {
                 await _callback({
                     text: `Address ${paramOptions.address} has balance of ${response.balance} HBAR`,
                     content: {

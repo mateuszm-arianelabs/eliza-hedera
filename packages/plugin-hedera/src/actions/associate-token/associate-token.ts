@@ -14,6 +14,7 @@ import { HederaAssociateTokenParams } from "./types.ts";
 import { hederaAssociateTokenParamsSchema } from "./schema.ts";
 import { AssociateTokenActionService } from "./service/associate-token-action-service.ts";
 import { associateTokenTemplate } from "../../templates/templates.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const associateTokenAction = {
     name: "HEDERA_ASSOCIATE_TOKEN",
@@ -60,7 +61,7 @@ export const associateTokenAction = {
 
             const response = await action.execute(paramOptions);
 
-            if (_callback && response.status === "SUCCESS") {
+            if (_callback && response.status === TxStatus.SUCCESS) {
                 await _callback({
                     text: `Token ${paramOptions.tokenId} has been associated with account.\nTransaction hash: ${response.txHash}`,
                     content: {

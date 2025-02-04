@@ -15,6 +15,7 @@ import { HederaTokenHoldersParams, TokenHoldersResult } from "./types.ts";
 import { hederaTokenHoldersParamsSchema } from "./schema.ts";
 import { TokenHoldersActionService } from "./services/token-holders-action-service.ts";
 import { toDisplayUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const tokenHoldersAction = {
     name: "HEDERA_TOKEN_HOLDERS",
@@ -81,7 +82,7 @@ export const tokenHoldersAction = {
                 text += `${holder.account}: ${displayBalance} ${result.tokenSymbol}\n`;
             }
 
-            if (_callback && result.status === "SUCCESS") {
+            if (_callback && result.status === TxStatus.SUCCESS) {
                 if (text === "") {
                     await _callback({
                         text: `Token ${paramOptions.tokenId} (${result.tokenName}) does not have any holders.`,

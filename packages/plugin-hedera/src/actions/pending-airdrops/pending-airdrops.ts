@@ -73,17 +73,17 @@ export const pendingAirdropsAction: Action = {
             }
 
             const formatedAirdrops = await Promise.all(
-                pendingAirdrops.map(async (d, idx) => {
+                pendingAirdrops.map(async (airdrop, index) => {
                     const tokenDetails = await get_hts_token_details(
-                        d.token_id,
+                        airdrop.token_id,
                         networkType
                     );
                     const displayAmount = await toDisplayUnit(
-                        d.token_id,
-                        d.amount,
+                        airdrop.token_id,
+                        airdrop.amount,
                         networkType
                     );
-                    return `(${idx + 1}) ${displayAmount.toString()} ${tokenDetails.symbol} (token id: ${d.token_id}) from ${d.sender_id}`;
+                    return `(${index + 1}) ${displayAmount.toString()} ${tokenDetails.symbol} (token id: ${airdrop.token_id}) from ${airdrop.sender_id}`;
                 })
             ).then((results) => results.join("\n"));
 
