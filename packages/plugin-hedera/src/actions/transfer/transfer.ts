@@ -1,13 +1,15 @@
 import {
     Action,
-    composeContext, elizaLogger,
+    composeContext,
+    elizaLogger,
     generateObjectDeprecated,
     HandlerCallback,
     type IAgentRuntime,
-    type Memory, ModelClass,
+    type Memory,
+    ModelClass,
     type State,
 } from "@elizaos/core";
-import {hederaTransferTemplate} from "../../templates";
+import { hederaHBARTransferTemplate } from "../../templates";
 import { HederaProvider } from "../../providers/client";
 import { TransferHbarService } from "./services/transfer-hbar.ts";
 import { transferDataParamsSchema } from "./schema.ts";
@@ -25,7 +27,7 @@ export const transferAction: Action = {
         try {
             const hederaTransferContext = composeContext({
                 state: state,
-                template: hederaTransferTemplate,
+                template: hederaHBARTransferTemplate,
                 templatingEngine: "handlebars",
             });
 
@@ -35,19 +37,21 @@ export const transferAction: Action = {
                 modelClass: ModelClass.SMALL,
             });
 
-            const hederaTransferData = transferDataParamsSchema.parse(hederaTransferContent)
+            const hederaTransferData = transferDataParamsSchema.parse(
+                hederaTransferContent
+            );
 
             const hederaProvider = new HederaProvider(runtime);
             const transferHbarService = new TransferHbarService(hederaProvider);
 
-            const tx = await transferHbarService.execute(hederaTransferData)
+            const tx = await transferHbarService.execute(hederaTransferData);
 
             await callback({
                 text: `HBAR transfer successfully. ${tx.toString()}`,
             });
 
-            return true
-        } catch(error) {
+            return true;
+        } catch (error) {
             elizaLogger.error("Error during HBAR transfer:", error);
 
             await callback({
@@ -68,16 +72,160 @@ export const transferAction: Action = {
     examples: [
         [
             {
-                user: "assistant",
+                user: "{{user}}",
                 content: {
-                    text: "I'll help you transfer 1 HBAR to 0.0.4515512",
+                    text: "Transfer {{1}} HBAR to {{0.0.4515512}}",
                     action: "TRANSFER_HBAR",
                 },
             },
             {
-                user: "user",
+                user: "{{assistant}}",
                 content: {
-                    text: "Transfer 1 HBAR to 0.0.4515512",
+                    text: "",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "Send {{10.5}} HBAR to account {{0.0.987654}}.",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "Move {{0.75}} HBAR to {{0.0.1234567}} now.",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "I want to transfer {{5}} HBAR to {{0.0.7654321}}.",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "Can you send {{3.25}} HBAR to {{0.0.5555555}}?",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "Transfer exactly {{8.8}} HBAR to {{0.0.9999999}}.",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "Make a transaction of {{15}} HBAR to {{0.0.6666666}}.",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "Please transfer {{2}} HBAR to {{0.0.3333333}} ASAP.",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "Move {{12.5}} HBAR from my wallet to {{0.0.2222222}}.",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+        ],
+        [
+            {
+                user: "{{user}}",
+                content: {
+                    text: "Send exactly {{50}} HBAR to {{0.0.7777777}}, please.",
+                    action: "TRANSFER_HBAR",
+                },
+            },
+            {
+                user: "{{assistant}}",
+                content: {
+                    text: "",
                     action: "TRANSFER_HBAR",
                 },
             },
