@@ -208,3 +208,34 @@ Example response for the input: "Who owns token 0.0.5432123 and what are their b
 
 Now respond with a JSON markdown block containing only the extracted values.
 `;
+
+export const topicInfoTemplate = `Given the recent messages
+{{recentMessages}}
+Extract the following information requested topic id:
+1. **Topic Id**:
+   - must be a string. Do not include dot after last character. Example of correct topic id: "0.0.5469474".
+
+Always look at the latest message from user and try to extract data from it!
+Respond with a JSON markdown block containing only the extracted value. Structure:
+\`\`\`json
+{
+    "topicId": string
+}
+\`\`\`
+
+Example response for the input: "Can you show me info about topic 0.0.5469474", the response should be:
+\`\`\`json
+{
+    "topicId": "0.0.5469474"
+}
+\`\`\`
+
+Example response for the input: "Show me details for topic 0.0.5469475" the response should be:
+\`\`\`json
+{
+    "topicId": "0.0.5469475"
+}
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;
