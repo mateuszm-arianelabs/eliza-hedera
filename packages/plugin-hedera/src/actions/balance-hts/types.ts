@@ -1,13 +1,14 @@
 import { z } from "zod";
 import { hederaHtsBalanceParamsSchema } from "./schema.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export type HederaHtsBalanceParams = z.infer<
     typeof hederaHtsBalanceParamsSchema
 >;
 
 export type IHtsBalanceResponse = {
-    status: "success" | "error";
-    balance: number;
+    status: TxStatus.SUCCESS;
+    balance: string;
     unit: string;
 };
 
@@ -15,14 +16,6 @@ export type TokenBalance = {
     account: string;
     balance: number;
     decimals: number;
-};
-
-export type HtsTokenBalanceApiReponse = {
-    timestamp: string;
-    balances: TokenBalance[];
-    links: {
-        next: string;
-    };
 };
 
 type ProtobufEncodedKey = {

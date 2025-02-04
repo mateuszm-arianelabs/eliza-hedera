@@ -13,6 +13,9 @@ import { HederaProvider } from "../../providers/client";
 import { claimAirdropTemplate } from "../../templates";
 import { claimAirdropParamsSchema } from "./schema.ts";
 import { ClaimAirdropService } from "./services/claim-airdrop-service.ts";
+import { generateHashscanUrl } from "../../shared/utils.ts";
+import { HederaNetworkType } from "../../shared/types.ts";
+import { TxStatus } from "../../shared/constants.ts";
 
 export const claimAirdropAction: Action = {
     name: "HEDERA_CLAIM_AIRDROP",
@@ -22,7 +25,7 @@ export const claimAirdropAction: Action = {
         _message: Memory,
         state: State,
         _options: { [key: string]: unknown },
-        _callback?: HandlerCallback
+        callback?: HandlerCallback
     ) => {
         const claimAirdropContext = composeContext({
             state: state,
@@ -40,23 +43,34 @@ export const claimAirdropAction: Action = {
             const claimAirdropData =
                 claimAirdropParamsSchema.parse(claimAirdropContent);
 
+            elizaLogger.log(
+                `Extracted data: ${JSON.stringify(claimAirdropData, null, 2)}`
+            );
+
             const accountId = runtime.getSetting("HEDERA_ACCOUNT_ID");
 
             const hederaProvider = new HederaProvider(runtime);
+            const networkType = runtime.getSetting(
+                "HEDERA_NETWORK_TYPE"
+            ) as HederaNetworkType;
+
             const action = new ClaimAirdropService(hederaProvider);
 
-            await action.execute(claimAirdropData, accountId);
+            const response = await action.execute(claimAirdropData, accountId);
 
-            await _callback({
-                text: `Successfully claimed airdrop for token ${claimAirdropData.tokenId}`,
-            });
+            if (callback && response.status === TxStatus.SUCCESS) {
+                const url = generateHashscanUrl(response.txHash, networkType);
+                await callback({
+                    text: `Successfully claimed airdrop for token ${claimAirdropData.tokenId}.\nTransaction link: ${url}`,
+                });
+            }
 
             return true;
         } catch (error) {
             elizaLogger.error("Error during claiming airdrop:", error);
 
-            if (_callback) {
-                await _callback({
+            if (callback) {
+                await callback({
                     text: `Error during claiming airdrop: ${error.message}`,
                     content: { error: error.message },
                 });
