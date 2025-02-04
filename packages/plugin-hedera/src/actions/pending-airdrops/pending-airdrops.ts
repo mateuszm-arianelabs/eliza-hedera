@@ -66,8 +66,8 @@ export const pendingAirdropsAction: Action = {
 
             if (!pendingAirdrops.length) {
                 await callback({
-                    text: `There is no pending airdrops for accountId ${accountId}`,
-                    content: `There is no pending airdrops for accountId ${accountId}`,
+                    text: `There are no pending airdrops for accountId ${accountId}`,
+                    content: `There are no pending airdrops for accountId ${accountId}`,
                 });
                 return true;
             }
@@ -88,7 +88,7 @@ export const pendingAirdropsAction: Action = {
             ).then((results) => results.join("\n"));
 
             await callback({
-                text: `Here is pending airdrops for account ${accountId} \n\n ${formatedAirdrops}`,
+                text: `Here are pending airdrops for account ${accountId} \n\n ${formatedAirdrops}`,
                 content: {
                     availableAirdrops: pendingAirdrops,
                 },

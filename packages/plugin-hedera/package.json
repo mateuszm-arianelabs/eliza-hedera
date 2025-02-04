@@ -7,7 +7,7 @@
     "dependencies": {
         "@elizaos/core": "workspace:*",
         "@hashgraph/sdk": "^2.56.0",
-        "hedera-agent-kit": "github:mateuszm-arianelabs/hedera-agent-kit#CCS-104-quick-improvements",
+        "hedera-agent-kit": "github:mateuszm-arianelabs/hedera-agent-kit#develop",
         "tsup": "8.3.5",
         "zod": "^3.24.1"
     },

@@ -1846,7 +1846,7 @@ importers:
         version: 2.56.0
       hedera-agent-kit:
         specifier: github:mateuszm-arianelabs/hedera-agent-kit#develop
-        version: https://codeload.github.com/mateuszm-arianelabs/hedera-agent-kit/tar.gz/3638b641238cf7af9162bd004d7d5e5d99cba560(encoding@0.1.13)(openai@4.78.1(encoding@0.1.13)(zod@3.24.1))
+        version: https://codeload.github.com/mateuszm-arianelabs/hedera-agent-kit/tar.gz/08f6ef39cbc6f638c1994f070abafa443c193473(encoding@0.1.13)(openai@4.78.1(encoding@0.1.13)(zod@3.24.1))
       tsup:
         specifier: 8.3.5
         version: 8.3.5(@swc/core@1.10.7(@swc/helpers@0.5.15))(jiti@2.4.2)(postcss@8.4.49)(tsx@4.19.2)(typescript@5.7.3)(yaml@2.7.0)
@@ -14678,8 +14678,8 @@ packages:
   headers-polyfill@3.3.0:
     resolution: {integrity: sha512-5e57etwBpNcDc0b6KCVWEh/Ro063OxPvzVimUdM0/tsYM/T7Hfy3kknIGj78SFTOhNd8AZY41U8mOHoO4LzmIQ==}
 
-  hedera-agent-kit@https://codeload.github.com/mateuszm-arianelabs/hedera-agent-kit/tar.gz/3638b641238cf7af9162bd004d7d5e5d99cba560:
-    resolution: {tarball: https://codeload.github.com/mateuszm-arianelabs/hedera-agent-kit/tar.gz/3638b641238cf7af9162bd004d7d5e5d99cba560}
+  hedera-agent-kit@https://codeload.github.com/mateuszm-arianelabs/hedera-agent-kit/tar.gz/08f6ef39cbc6f638c1994f070abafa443c193473:
+    resolution: {tarball: https://codeload.github.com/mateuszm-arianelabs/hedera-agent-kit/tar.gz/08f6ef39cbc6f638c1994f070abafa443c193473}
     version: 1.0.2
 
   help-me@5.0.0:
@@ -40956,12 +40956,13 @@ snapshots:
 
   headers-polyfill@3.3.0: {}
 
-  hedera-agent-kit@https://codeload.github.com/mateuszm-arianelabs/hedera-agent-kit/tar.gz/3638b641238cf7af9162bd004d7d5e5d99cba560(encoding@0.1.13)(openai@4.78.1(encoding@0.1.13)(zod@3.24.1)):
+  hedera-agent-kit@https://codeload.github.com/mateuszm-arianelabs/hedera-agent-kit/tar.gz/08f6ef39cbc6f638c1994f070abafa443c193473(encoding@0.1.13)(openai@4.78.1(encoding@0.1.13)(zod@3.24.1)):
     dependencies:
       '@hashgraph/sdk': 2.56.0
       '@langchain/core': 0.3.29(openai@4.78.1(encoding@0.1.13)(zod@3.24.1))
       '@langchain/langgraph': 0.2.39(@langchain/core@0.3.29(openai@4.78.1(encoding@0.1.13)(zod@3.24.1)))
       '@langchain/openai': 0.3.17(@langchain/core@0.3.29(openai@4.78.1(encoding@0.1.13)(zod@3.24.1)))(encoding@0.1.13)
+      bignumber.js: 9.1.2
       dotenv: 16.4.7
     transitivePeerDependencies:
       - debug
