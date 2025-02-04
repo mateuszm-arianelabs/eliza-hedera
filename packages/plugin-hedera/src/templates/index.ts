@@ -14,8 +14,8 @@ Always try to extract the information from last message! Do not use previously c
 Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
 \`\`\`json
 {
-    "amount": string, // The amount to transfer as a string.
-    "accountId": string // The recipient's accountId.
+    "amount": string,
+    "accountId": string
 }
 \`\`\`
 
@@ -54,10 +54,10 @@ Always try to extract the information from last message! Do not use previously c
 Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
 \`\`\`json
 {
-    "name": string, // Name of the new token to create.
-    "symbol": string, // Token symbol as uppercase short string
-    "decimals": number, // Token decimals as number.
-    "initialSupply": number // Initial supply of fungible tokens
+    "name": string,
+    "symbol": string,
+    "decimals": number,
+    "initialSupply": number
 }
 \`\`\`
 
@@ -97,9 +97,9 @@ Respond with a JSON markdown block containing only the extracted values.
 All fields are required, recipients array should have minimum one accountId(string):
 \`\`\`json
 {
-    "tokenId": string, // TokenId to airdrop
-    "recipients": string[], // Recipients is array of accountIds(string)
-    "amount": number // Token amount to send to recipients.
+    "tokenId": string,
+    "recipients": string[],
+    "amount": number
 }
 \`\`\`
 

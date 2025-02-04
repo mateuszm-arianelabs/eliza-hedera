@@ -12,8 +12,8 @@ Always look at the latest message from user and try to extract data from it!
 Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
 \`\`\`json
 {
-    "symbol": string,   // The symbol of token (HBAR).
-    "address": string   // The wallet address.
+    "symbol": string,
+    "address": string
 \`\`\`
 
 Example response for the input: "Show me HBAR balance of wallet 0.1.123123.", the response should be:
@@ -52,8 +52,8 @@ Always look at the latest message from user and try to extract data from it!
 Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
 \`\`\`json
 {
-    "tokenId": string,   // Id of the token.
-    "address": string   // The wallet address.
+    "tokenId": string,
+    "address": string
 }
 \`\`\`
 
@@ -89,7 +89,7 @@ Always look at the latest message from user and try to extract data from it!
 Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
 \`\`\`json
 {
-    "address": string   // The wallet address. Optional!
+    "address": string
 }
 \`\`\`
 
@@ -121,7 +121,7 @@ Always look at the latest message from user and try to extract data from it!
 Respond with a JSON markdown block containing only the extracted values. All fields are required:
 \`\`\`json
 {
-    "tokenId": string   // Id of the token to reject
+    "tokenId": string
 }
 \`\`\`
 
@@ -152,7 +152,7 @@ Extract the following information about associating tokens with account:
 Respond with a JSON markdown block containing only the extracted values. All fields are required:
 \`\`\`json
 {
-    "tokenId": string,   // The tokenId address. Required
+    "tokenId": string,
 }
 \`\`\`
 
@@ -186,8 +186,8 @@ Always look at the latest message from user and try to extract data from it!
 Respond with a JSON markdown block containing only the extracted values. Fields:
 \`\`\`json
 {
-    "tokenId": string,   // The tokenId address. Required
-    "threshold": number    // threshold, requested wallets should have more tokens than given threshold. Optional
+    "tokenId": string,
+    "threshold": number
 }
 \`\`\`
 
