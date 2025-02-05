@@ -631,6 +631,8 @@ Create topic with memo: test message. I want posting to it to be guarded.
 Create topic with memo: 'test message' and submit key.
 ```
 
+**Note:** the topic will be secured with key for an account that the agent is using.
+
 ---
 
 ## Contribution
