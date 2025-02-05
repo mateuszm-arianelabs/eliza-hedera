@@ -269,25 +269,52 @@ Extract the following information about the new topic:
    - Extract string representing memo of topic.
    - The value must be a string, may be single or multiple words.
    - Example topic memo: "crypto", "token transfer logs"
+2. **Is Submit Key**:
+    - boolean - true or false
+    - defines if posting to topic is protected by submitKey
+    - extract information about the submitKey from user prompt.
+    - If information is present, set it to true.
+    - If there is no information about submitKey or it's explicitly said to set it to false in parsed request set it to false!
 
-Respond with a JSON markdown block containing only the extracted values. All fields are required:
+Check if you have correctly interpreted the isSubmitKey as true or false.
+
+Respond with a JSON markdown block containing only the extracted values. All fields are required, always set isSubmitKey:
 \`\`\`json
 {
-    "memo": string // String representing memo of topic.
+    "memo": string,
+    "isSubmitKey": boolean
 }
 \`\`\`
 
-Example reponse for the input: "Create new topic with crypto memo", the response should be:
+Example response for the input: "Create new topic with crypto memo", the response should be:
 \`\`\`json
 {
-    "memo": "crypto"
+    "memo": "crypto",
+    "isSubmitKey": false
 }
 \`\`\`
 
-Example reponse for the input: "Create new topic with memo token transfer logs", the response should be:
+Example response for the input: "Create new topic with memo 'token transfer logs'. Use submit key.", the response should be:
 \`\`\`json
 {
-    "memo": "token transfer logs"
+    "memo": "token transfer logs",
+    "isSubmitKey": true
+}
+\`\`\`
+
+Example response for the input: "Create new topic with memo "token transfer logs". Guard posting to topic with key.", the response should be:
+\`\`\`json
+{
+    "memo": "token transfer logs",
+    "isSubmitKey": true
+}
+\`\`\`
+
+Example response for the input: "Create new topic with memo: "token transfer logs". Let everyone post to it.", the response should be:
+\`\`\`json
+{
+    "memo": "token transfer logs",
+    "isSubmitKey": false
 }
 \`\`\`
 

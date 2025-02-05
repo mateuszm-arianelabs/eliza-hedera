@@ -13,6 +13,9 @@ import { hederaCreateTopicTemplate } from "../../templates";
 import { createTopicParamsSchema } from "./schema.ts";
 import { HederaProvider } from "../../providers/client";
 import { CreateTopicService } from "./services/create-topic.ts";
+import { TxStatus } from "../../shared/constants.ts";
+import { generateHashscanUrl } from "../../shared/utils.ts";
+import { HederaNetworkType } from "../../shared/types.ts";
 
 export const createTopicAction: Action = {
     name: "HEDERA_CREATE_TOPIC",
@@ -40,15 +43,29 @@ export const createTopicAction: Action = {
             const createTopicData =
                 createTopicParamsSchema.parse(createTopicContent);
 
+            elizaLogger.log(
+                `Extracted data: ${JSON.stringify(createTopicData, null, 2)}`
+            );
+
             const hederaProvider = new HederaProvider(runtime);
+            const networkType = runtime.getSetting(
+                "HEDERA_NETWORK_TYPE"
+            ) as HederaNetworkType;
+
             const action = new CreateTopicService(hederaProvider);
 
-            const newTopicId = await action.execute(createTopicData);
+            const response = await action.execute(createTopicData);
 
-            await callback({
-                text: `Created new topic with id: ${newTopicId.toString()}`,
-                context: { newTopicId },
-            });
+            if (callback && response.status === TxStatus.SUCCESS) {
+                const url = generateHashscanUrl(response.txHash, networkType);
+                await callback({
+                    text: `Successfully created topic: ${response.topicId}.\nTransaction link: ${url}\n`,
+                    content: {
+                        success: true,
+                        topicId: response.topicId,
+                    },
+                });
+            }
 
             return true;
         } catch (error) {
@@ -72,32 +89,80 @@ export const createTopicAction: Action = {
     examples: [
         [
             {
-                user: "assistant",
+                user: "user",
                 content: {
-                    text: "I'll help you create new with memo: crypto",
+                    text: "Create a new topic with memo 'blockchain logs'",
                     action: "HEDERA_CREATE_TOPIC",
                 },
             },
             {
-                user: "user",
+                user: "assistant",
                 content: {
-                    text: "Create new topic with {{crypto}} memo",
+                    text: "I'll help you create new with memo: blockchain logs",
                     action: "HEDERA_CREATE_TOPIC",
                 },
             },
         ],
         [
             {
-                user: "assistant",
+                user: "user",
                 content: {
-                    text: "I'll help you create new with memo: crypto",
+                    text: "Create for me a new topic with memo 'NFT transactions'",
                     action: "HEDERA_CREATE_TOPIC",
                 },
             },
             {
+                user: "assistant",
+                content: {
+                    text: "I'll help you create new with memo: NFT transactions",
+                    action: "HEDERA_CREATE_TOPIC",
+                },
+            },
+        ],
+        [
+            {
                 user: "user",
                 content: {
-                    text: 'Create for me new topic with memo "{{MyToken transaction logs}}"',
+                    text: "Create a new topic with memo 'DeFi logs'. Use a submit key.",
+                    action: "HEDERA_CREATE_TOPIC",
+                },
+            },
+            {
+                user: "assistant",
+                content: {
+                    text: "I'll help you create new with memo: DeFi logs and submit key enabled",
+                    action: "HEDERA_CREATE_TOPIC",
+                },
+            },
+        ],
+        [
+            {
+                user: "user",
+                content: {
+                    text: "Create a new topic with memo 'security alerts'. Restrict posting with a key.",
+                    action: "HEDERA_CREATE_TOPIC",
+                },
+            },
+            {
+                user: "assistant",
+                content: {
+                    text: "I'll help you create new with memo: security alerts and submit key enabled",
+                    action: "HEDERA_CREATE_TOPIC",
+                },
+            },
+        ],
+        [
+            {
+                user: "user",
+                content: {
+                    text: "Create a topic with memo 'open discussion'. Let everyone post.",
+                    action: "HEDERA_CREATE_TOPIC",
+                },
+            },
+            {
+                user: "assistant",
+                content: {
+                    text: "I'll help you create new with memo: open discussion",
                     action: "HEDERA_CREATE_TOPIC",
                 },
             },
