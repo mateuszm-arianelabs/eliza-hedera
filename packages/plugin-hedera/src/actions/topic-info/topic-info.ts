@@ -69,8 +69,9 @@ export const topicInfoAction = {
             const result = await action.execute(paramOptions, networkType);
 
             if (callback && result !== "") {
+                const url = `https://hashscan.io/${networkType}/topic/${paramOptions.topicId}`;
                 await callback({
-                    text: `Topic info for topic with id ${paramOptions.topicId}:\n${result}`,
+                    text: `Topic info for topic with id ${paramOptions.topicId}:\n${result}\nLink: ${url}`,
                     content: {
                         success: true,
                         topicInfo: result,

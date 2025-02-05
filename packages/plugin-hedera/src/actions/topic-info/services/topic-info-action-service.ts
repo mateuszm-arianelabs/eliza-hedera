@@ -38,7 +38,7 @@ export class TopicInfoActionService {
             ? convertTimestampToUTC(topicInfo.created_timestamp)
             : "null";
 
-        const memo = topicInfo.memo ? topicInfo.memo : `memo is not set`;
+        const memo = topicInfo.memo ? topicInfo.memo : `not available`;
 
         return [
             "--------------------------------------",
