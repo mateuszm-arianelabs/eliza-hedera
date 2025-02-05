@@ -525,7 +525,7 @@ Note that this action takes two mandatory parameters:
 
 #### Example Prompts
 
-Below is presented a flow of using Associate Token action
+Below is presented a flow of using Transfer HBAR action
 
 1. User input:
 
@@ -552,6 +552,55 @@ Examples of other supported requests for this action:
 Make a transaction of 4 HBAR to 0.0.5392887.
 Send 1 HBAR to account 0.0.5392887.
 Transfer exactly 1.1 HBAR to 0.0.5392887.
+```
+
+---
+
+### Get Topic Info
+
+Get Topic Info action allows to fetch details about given topic by topic id.
+Note that this action takes one mandatory parameter:
+- **Topic Id** - id of topic (ex. `0.0.5473398`)
+
+#### Example Prompts
+
+Below is presented a flow of using Get Topic Info action
+
+1. User input:
+
+```
+Give me details about topic 0.0.5473398
+```
+
+2. LLM response - action execution:
+
+```
+Fetching the details for topic ID 0.0.5473398. Please hold on for a moment.
+```
+
+3. Action's callback response:
+
+```
+Topic info for topic with id 0.0.5473398:
+--------------------------------------
+Memo: SimulatedTwins Verifiable Credentials Topic
+Creation time: 2025-02-05T08:22:06.917Z
+Expiration time: 2025-02-05T08:22:06.917Z
+Admin key:
+   not available
+Submit key:
+   e3b93603b0d533767e5ba73ffd6136a59b8554d322268ed4c92d7209efee472b
+   type: ED25519
+Deleted: false
+--------------------------------------
+Link: https://hashscan.io/testnet/topic/0.0.5473398
+```
+
+Examples of other supported requests for this action:
+```
+Show me info about topic 0.0.5473398.
+Fetch topic details for 0.0.5473398.
+Can you provide information on topic 0.0.5473398?
 ```
 
 ---
