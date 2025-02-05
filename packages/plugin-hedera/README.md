@@ -565,6 +565,45 @@ Fetch topic details for 0.0.5473398.
 Can you provide information on topic 0.0.5473398?
 ```
 
+### Submit Topic Message
+
+Submit Topic Message action posting messages to topics by topic IDs.
+Note that this action takes two mandatory parameters:
+- **Topic Id** - id of topic (ex. `0.0.5473398`)
+- **Message** - string containing message
+
+#### Example Prompts
+
+Below is presented a flow of using Submit Topic Message action
+
+1. User input:
+
+```
+submit message 'test test test' to topic 0.0.5475023.
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Successfully submitted message to topic: 0.0.5475023
+Transaction link: https://hashscan.io/testnet/tx/0.0.5393196@1738767753.145858310
+```
+
+Examples of other supported requests for this action:
+```
+Submit message 'Hedera is great!' to topic 0.0.654321.
+I want to post to topic 0.0.987654. Message: Smart contracts update.
+Send 'DeFi price feed update' to topic 0.0.5475023.
+```
+**Note:**
+you can post only to topics without submitKey or with submitKey form account that the agent is using.
+
 ---
 
 ## Contribution

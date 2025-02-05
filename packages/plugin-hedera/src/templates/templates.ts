@@ -239,3 +239,50 @@ Example response for the input: "Show me details for topic 0.0.5469475" the resp
 
 Now respond with a JSON markdown block containing only the extracted values.
 `;
+
+export const submitTopicMessageTemplate = `Given the recent messages and wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+
+Extract the following information about message to submit to topic request:
+1. **Topic Id**:
+   - must be a string. Do not include dot after last character. Example of correct topicId: "0.0.539314".
+
+2. **Message Body**:
+   - Must be a string.
+
+Always look at the latest message from user and try to extract data from it!
+Respond with a JSON markdown block containing only the extracted values. All fields are required:
+\`\`\`json
+{
+    "topicId": string,
+    "message": string
+}
+\`\`\`
+
+Example response for the input: "Submit message: 'test message' to topic 0.0.5423981.", the response should be:
+\`\`\`json
+{
+    "topicId": "0.0.5423981",
+    "message": "test message"
+}
+\`\`\`
+
+Example response for the input: "Submit message 'test message2' topic 0.0.5423966.", the response should be:
+\`\`\`json
+{
+    "topicId": "0.0.5423966",
+    "message": "test message2"
+}
+\`\`\`
+
+Example response for the input: "I want post to topic 0.0.5423966. Message: test message3.", the response should be:
+\`\`\`json
+{
+    "topicId": "0.0.5423966",
+    "message": "test message3"
+}
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;
