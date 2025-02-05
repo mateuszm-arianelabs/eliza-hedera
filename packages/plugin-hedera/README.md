@@ -464,8 +464,8 @@ Calling relevant action. Please wait...
 3. Action's callback response:
 
 ```
-Token 0.0.5450063 has been associated with account.
-Transaction hash: f2601d4fdb986f412f7ef1342d9b943fd16ff39029b0f8c054ffb5dffe0b2ef25914da9d2662159fe7883c5f47bed3cc
+Token 0.0.5450063 has been associated with the account.
+Transaction link: https://hashscan.io/testnet/transaction/1738313812.597816600
 ```
 
 Currently, plugin supports associating with only one token for one prompt.
@@ -476,6 +476,44 @@ Please associate my account with token 0.0.111222.
 Connect my wallet to token 0.0.333444.
 Could you link token 0.0.555666 to my wallet?
 Make my wallet associated with token 0.0.999000.
+```
+
+### Dissociate Token
+
+Dissociate Token action allows to remove selected token from your account.
+Note that this action takes one mandatory parameter:
+- **Token id** - id of token to dissociate
+
+#### Example Prompts
+
+Below is presented a flow of using Dissociate Token action
+
+1. User input:
+
+```
+Dissociate my wallet with token0.0.5472930.
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Token 0.0.5472930 has been dissociated from the account.
+Transaction link: https://hashscan.io/testnet/tx/0.0.5393196@1738744214.605233556
+```
+
+Currently, plugin supports dissociating with only one token for one prompt.
+
+Examples of other supported requests for this action:
+```
+Please Dissociate my account with token 0.0.111222.
+Disconnect my wallet to token 0.0.333444.
+Could you unlink token 0.0.555666 from my wallet?
 ```
 
 ### Transfer HBAR

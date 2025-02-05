@@ -10,17 +10,17 @@ import {
 } from "@elizaos/core";
 
 import { HederaProvider } from "../../providers/client";
-import { HederaAssociateTokenParams } from "./types.ts";
-import { hederaAssociateTokenParamsSchema } from "./schema.ts";
-import { AssociateTokenActionService } from "./service/associate-token-action-service.ts";
-import { associateTokenTemplate } from "../../templates/templates.ts";
+import { DissociateTokenActionService } from "./service/dissociate-token-action-service.ts";
+import { dissociateTokenTemplate } from "../../templates/templates.ts";
 import { TxStatus } from "../../shared/constants.ts";
+import { hederaDissociateTokenParamsSchema } from "./schema.ts";
+import { HederaDissociateTokenParams } from "./types.ts";
 import { HederaNetworkType } from "../../shared/types.ts";
 import { generateHashscanUrl } from "../../shared/utils.ts";
 
-export const associateTokenAction = {
-    name: "HEDERA_ASSOCIATE_TOKEN",
-    description: "Associates provided token with given account",
+export const dissociateTokenAction = {
+    name: "HEDERA_DISSOCIATE_TOKEN",
+    description: "Dissociates provided token with given account",
     handler: async (
         runtime: IAgentRuntime,
         _message: Memory,
@@ -28,20 +28,20 @@ export const associateTokenAction = {
         _options: { [key: string]: unknown },
         _callback?: HandlerCallback
     ) => {
-        const hederaAssociateTokenContext = composeContext({
+        const hederaDissociateTokenContext = composeContext({
             state: state,
-            template: associateTokenTemplate,
+            template: dissociateTokenTemplate,
             templatingEngine: "handlebars",
         });
 
-        const hederaAssociateTokenContent = await generateObjectDeprecated({
+        const hederaDissociateTokenContent = await generateObjectDeprecated({
             runtime: runtime,
-            context: hederaAssociateTokenContext,
+            context: hederaDissociateTokenContext,
             modelClass: ModelClass.SMALL,
         });
 
-        const paramOptions: HederaAssociateTokenParams = {
-            tokenId: hederaAssociateTokenContent.tokenId,
+        const paramOptions: HederaDissociateTokenParams = {
+            tokenId: hederaDissociateTokenContent.tokenId,
         };
 
         elizaLogger.log(
@@ -50,26 +50,27 @@ export const associateTokenAction = {
 
         try {
             const validationResult =
-                hederaAssociateTokenParamsSchema.safeParse(paramOptions);
+                hederaDissociateTokenParamsSchema.safeParse(paramOptions);
 
             if (!validationResult.success) {
                 throw new Error(
                     `Validation failed: ${validationResult.error.errors.map((e) => e.message).join(", ")}`
                 );
             }
+
             const hederaProvider = new HederaProvider(runtime);
             const networkType = runtime.getSetting(
                 "HEDERA_NETWORK_TYPE"
             ) as HederaNetworkType;
 
-            const action = new AssociateTokenActionService(hederaProvider);
+            const action = new DissociateTokenActionService(hederaProvider);
 
             const response = await action.execute(paramOptions);
 
             if (_callback && response.status === TxStatus.SUCCESS) {
                 const url = generateHashscanUrl(response.txHash, networkType);
                 await _callback({
-                    text: `Token ${paramOptions.tokenId} has been associated with the account.\nTransaction link: ${url}`,
+                    text: `Token ${paramOptions.tokenId} has been dissociated from account.\nTransaction link: ${url}`,
                     content: {
                         success: true,
                         tokenId: paramOptions.tokenId,
@@ -79,20 +80,20 @@ export const associateTokenAction = {
             return true;
         } catch (error) {
             elizaLogger.error(
-                `Error during associating token ${paramOptions.tokenId}:`,
+                `Error during dissociating token ${paramOptions.tokenId}:`,
                 error
             );
 
             if (_callback) {
                 await _callback({
-                    text: `Error during associating token ${paramOptions.tokenId}: ${error.message}`,
+                    text: `Error during dissociating token ${paramOptions.tokenId}: ${error.message}`,
                     content: { error: error.message },
                 });
             }
             return false;
         }
     },
-    template: associateTokenTemplate,
+    template: dissociateTokenTemplate,
     validate: async (runtime: IAgentRuntime) => {
         const privateKey = runtime.getSetting("HEDERA_PRIVATE_KEY");
         const accountAddress = runtime.getSetting("HEDERA_ACCOUNT_ID");
@@ -105,15 +106,15 @@ export const associateTokenAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Associate my wallet with token {{0.0.123456}}.",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    text: "Disassociate my wallet from token {{0.0.123456}}.",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
             {
                 user: "{{user2}}",
                 content: {
                     text: "",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                     tokenId: "0.0.123456",
                 },
             },
@@ -122,15 +123,15 @@ export const associateTokenAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Can you link my wallet to token {{0.0.654321}}?",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    text: "Can you unlink my wallet from token {{0.0.654321}}?",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
             {
                 user: "{{user2}}",
                 content: {
                     text: "",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
         ],
@@ -138,15 +139,15 @@ export const associateTokenAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "I want to associate my wallet with token {{0.0.987654}}.",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    text: "I want to remove my wallet’s association with token {{0.0.987654}}.",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
             {
                 user: "{{user2}}",
                 content: {
                     text: "",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
         ],
@@ -154,15 +155,15 @@ export const associateTokenAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Please associate my account with token {{0.0.111222}}.",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    text: "Please remove my account’s link to token {{0.0.111222}}.",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
             {
                 user: "{{user2}}",
                 content: {
                     text: "",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
         ],
@@ -170,15 +171,15 @@ export const associateTokenAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Connect my wallet to token {{0.0.333444}}.",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    text: "Disconnect my wallet from token {{0.0.333444}}.",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
             {
                 user: "{{user2}}",
                 content: {
                     text: "",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
         ],
@@ -186,15 +187,15 @@ export const associateTokenAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Could you link token {{0.0.555666}} to my wallet?",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    text: "Could you remove token {{0.0.555666}} from my wallet?",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
             {
                 user: "{{user2}}",
                 content: {
                     text: "",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
         ],
@@ -202,15 +203,15 @@ export const associateTokenAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Attach token {{0.0.777888}} to my wallet.",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    text: "Detach token {{0.0.777888}} from my wallet.",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
             {
                 user: "{{user2}}",
                 content: {
                     text: "",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
         ],
@@ -218,15 +219,15 @@ export const associateTokenAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Make my wallet associated with token {{0.0.999000}}.",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    text: "Make my wallet no longer associated with token {{0.0.999000}}.",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
             {
                 user: "{{user2}}",
                 content: {
                     text: "",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
         ],
@@ -234,15 +235,15 @@ export const associateTokenAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "I’d like to link token {{0.0.112233}} with my wallet.",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    text: "I’d like to unlink token {{0.0.112233}} from my wallet.",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
             {
                 user: "{{user2}}",
                 content: {
                     text: "",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
         ],
@@ -250,18 +251,18 @@ export const associateTokenAction = {
             {
                 user: "{{user1}}",
                 content: {
-                    text: "Help me associate token {{0.0.445566}} to my wallet.",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    text: "Help me disassociate token {{0.0.445566}} from my wallet.",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
             {
                 user: "{{user2}}",
                 content: {
                     text: "",
-                    action: "HEDERA_ASSOCIATE_TOKEN",
+                    action: "HEDERA_DISSOCIATE_TOKEN",
                 },
             },
         ],
     ],
-    similes: ["HEDERA_ASSOCIATE_HTS"],
+    similes: ["HEDERA_DISSOCIATE_HTS", "HEDERA_UNLINK_TOKEN"],
 };
