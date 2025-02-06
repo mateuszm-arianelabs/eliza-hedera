@@ -10,7 +10,7 @@ export class CreateTopicService {
             throw new Error("Missing memo of new topic");
         }
         if (params.isSubmitKey === null) {
-            throw new Error("Missing information about Submit Key");
+            params.isSubmitKey = false;
         }
 
         const agentKit = this.hederaProvider.getHederaAgentKit();
