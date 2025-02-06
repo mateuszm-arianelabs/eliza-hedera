@@ -398,6 +398,48 @@ Airdrop token 0.0.5450643 to wallets: 0.0.5392887, 0.0.5393076, 0.0.4515756. Amo
 ```
 ---
 
+### Mint Token
+
+Mint token action allows to mint additional supply of fungible token. To do that token should first have an agents key set as supply key assigned to it during its creation.
+Note that this action takes two mandatory parameters:
+- **Token id** - id of token to mint
+- **Amount** - amount of tokens that should be minted. Given in display format
+
+Minted token will be assigned to its creator account.
+
+#### Example Prompts
+
+Below is presented a flow of using Mint Token action
+
+1. User input:
+
+```
+mint 10000000 tokens 0.0.5478757
+```
+
+2. LLM response - action execution:
+
+```
+I'll mint 10,000,000 of token 0.0.5478757 for you.
+```
+
+3. Action's callback response:
+
+```
+Successfully minted 10000000 of tokens 0.0.5478757
+Transaction link: https://hashscan.io/testnet/tx/0.0.5393196@1738849591.451351050
+```
+
+Examples of other supported requests for this action:
+```
+Mint 100 of 0.0.5478757
+Generate 999 tokens 0.0.5478757
+increase supply of token 0.0.5478757 by 9999
+```
+
+---
+
+
 ### Reject Token
 
 Reject token action allows to reject unwanted token received from airdrop on the Hedera network.

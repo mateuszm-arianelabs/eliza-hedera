@@ -17,6 +17,7 @@ import { deleteTopicAction } from "./actions/delete-topic/delete-topic.ts";
 import { dissociateTokenAction } from "./actions/dissociate-token/dissociate-token.ts";
 import { topicInfoAction } from "./actions/topic-info/topic-info.ts";
 import { submitTopicMessageAction } from "./actions/submit-topic-message/submit-topic-message.ts";
+import { mintTokenAction } from "./actions/mint-token/mint-token.ts";
 
 export const hederaPlugin: Plugin = {
     name: "Hedera",
@@ -42,6 +43,7 @@ export const hederaPlugin: Plugin = {
         dissociateTokenAction,
         topicInfoAction,
         submitTopicMessageAction,
+        mintTokenAction,
     ],
 };
 
