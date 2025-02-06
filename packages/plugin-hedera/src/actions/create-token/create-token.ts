@@ -88,7 +88,7 @@ export const createTokenAction: Action = {
             {
                 user: "{{user}}",
                 content: {
-                    text: "Create new token with name {{MyToken}} with symbol {{MTK}}, {{8}} decimals and {{1000}} initial supply",
+                    text: "Create new token with name {{MyToken}} with symbol {{MTK}}, {{8}} decimals and {{1000}} initial supply.",
                     action: "HEDERA_CREATE_TOKEN",
                 },
             },
@@ -104,7 +104,7 @@ export const createTokenAction: Action = {
             {
                 user: "{{user}}",
                 content: {
-                    text: "Create a new token called {{CryptoCoin}} with symbol {{CCN}}, {{6}} decimals, and a total supply of {{50000}}.",
+                    text: "Create a new token named {{HederaDollar}} with ticker {{H$}}, {{4}} decimals, and {{1000000}} initial supply. I want to set the supply key so I could add more tokens later.",
                     action: "HEDERA_CREATE_TOKEN",
                 },
             },
@@ -120,7 +120,7 @@ export const createTokenAction: Action = {
             {
                 user: "{{user}}",
                 content: {
-                    text: "Create a new token named {{HederaDollar}} with ticker {{H$}}, {{4}} decimals, and {{1000000}} initial supply.",
+                    text: "Create token {{GameGold}} with symbol {{GG}}, {{2}} decimal places, and starting supply of {{750000}}. This is the final supply, don’t set a supply key.",
                     action: "HEDERA_CREATE_TOKEN",
                 },
             },
@@ -136,7 +136,7 @@ export const createTokenAction: Action = {
             {
                 user: "{{user}}",
                 content: {
-                    text: "Create token {{GameGold}} with symbol {{GG}}, {{2}} decimal places, and starting supply of {{750000}}.",
+                    text: "Deploy a token named {{SuperToken}} with short code {{STK}}, {{5}} decimal places, and an issuance of {{100000}}. No additional tokens will be minted.",
                     action: "HEDERA_CREATE_TOKEN",
                 },
             },
@@ -152,7 +152,7 @@ export const createTokenAction: Action = {
             {
                 user: "{{user}}",
                 content: {
-                    text: "Create a new token named {{MetaCoin}} with symbol {{MTC}}, having {{10}} decimal places and {{2500}} initial supply.",
+                    text: "Create new HTS token {{PixelCoin}} with symbol {{PXN}}, {{3}} decimal places, and {{500}} tokens minted. I want to control supply changes, so set the supply key.",
                     action: "HEDERA_CREATE_TOKEN",
                 },
             },
@@ -168,71 +168,7 @@ export const createTokenAction: Action = {
             {
                 user: "{{user}}",
                 content: {
-                    text: "Deploy a token named {{SuperToken}} with short code {{STK}}, {{5}} decimal places, and an issuance of {{100000}}.",
-                    action: "HEDERA_CREATE_TOKEN",
-                },
-            },
-            {
-                user: "{{assistant}}",
-                content: {
-                    text: "",
-                    action: "HEDERA_CREATE_TOKEN",
-                },
-            },
-        ],
-        [
-            {
-                user: "{{user}}",
-                content: {
-                    text: "Create new HTS token {{PixelCoin}} with symbol {{PXN}}, {{3}} decimal places, and {{500}} tokens minted.",
-                    action: "HEDERA_CREATE_TOKEN",
-                },
-            },
-            {
-                user: "{{assistant}}",
-                content: {
-                    text: "",
-                    action: "HEDERA_CREATE_TOKEN",
-                },
-            },
-        ],
-        [
-            {
-                user: "{{user}}",
-                content: {
-                    text: "Launch a new HTS token called {{SkyCredits}} with ticker {{SKC}}, {{9}} decimal places, and a total supply of {{25000}}.",
-                    action: "HEDERA_CREATE_TOKEN",
-                },
-            },
-            {
-                user: "{{assistant}}",
-                content: {
-                    text: "",
-                    action: "HEDERA_CREATE_TOKEN",
-                },
-            },
-        ],
-        [
-            {
-                user: "{{user}}",
-                content: {
-                    text: "Create {{OceanToken}} with short symbol {{OCT}}, supporting {{7}} decimal places and starting supply of {{99999}}.",
-                    action: "HEDERA_CREATE_TOKEN",
-                },
-            },
-            {
-                user: "{{assistant}}",
-                content: {
-                    text: "",
-                    action: "HEDERA_CREATE_TOKEN",
-                },
-            },
-        ],
-        [
-            {
-                user: "{{user}}",
-                content: {
-                    text: "Generate token {{CyberCredits}} with code {{CYC}}, {{8}} decimals, and an initial pool of {{12000}} units.",
+                    text: "Launch a new HTS token called {{SkyCredits}} with ticker {{SKC}}, {{9}} decimal places, and a total supply of {{25000}}. The supply is fixed.",
                     action: "HEDERA_CREATE_TOKEN",
                 },
             },
