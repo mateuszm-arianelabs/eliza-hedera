@@ -5,4 +5,5 @@ export const createTokenParamsSchema = z.object({
     symbol: z.string(),
     decimals: z.coerce.number(),
     initialSupply: z.coerce.number(),
-})
+    isSupplyKey: z.boolean(),
+});
