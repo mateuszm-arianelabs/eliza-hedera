@@ -326,34 +326,60 @@ Note that this action takes four mandatory parameters:
 - **name** - name of the new token to create
 - **symbol** - token symbol as uppercase short string
 - **decimals** - token decimals as number
-- **initialSupply** - initial supply of fungible tokens given in {denom format?? Implementation should be later changed to accept display unit format}
+- **initialSupply** - initial supply of fungible tokens given in display format
+- **isSupplyKey** - boolean deciding whether agent's key should be set as supply key allowing to mint more tokens
 
 #### Example Prompts
 
 Below is presented a flow of using Create Token action
 
+##### Without supplyKey:
 1. User input:
 
 ```
-Create new token with name MyToken with symbol MTK, 8 decimals and 1000 initial supply
+Create token GameGold with symbol GG, 2 decimal places, and starting supply of 750000.
 ```
 
 2. LLM response - action execution:
 
 ```
-Calling CREATE_TOKEN action to create a new token with name NotMyToken, symbol NMTK, 8 decimals, and 1000 initial supply. Please wait...
+I will help you create the token 'GameGold' with symbol 'GG', 2 decimal places, and a starting supply of 750,000. This will be the final supply, and no supply key will be set.
 ```
 
 3. Action's callback response:
 
 ```
-Created new token with id: 0.0.5450092
+Created new token with id: 0.0.5478715
+Transaction link: https://hashscan.io/testnet/tx/0.0.5393196@1738841329.271042438
 ```
+
+##### With supplyKey:
+1. User input:
+
+```
+Create token BitcoinIsGold with symbol BIG, 2 decimal places, and starting supply of 12345. Add supply key.
+```
+
+2. LLM response - action execution:
+
+```
+I will help you create the token 'BitcoinIsGold' with symbol 'BIG', 2 decimal places, and a starting supply of 12,345. A supply key will be added for this token.
+```
+
+3. Action's callback response:
+
+```
+Created new token with id: 0.0.5478721
+Transaction link: https://hashscan.io/testnet/tx/0.0.5393196@1738841441.095220823
+```
+
+
 Examples of other supported requests for this action:
 ```
 Create a new token called CryptoCoin with symbol CCN, 6 decimals, and a total supply of 50000.
-Create a new token named HederaDollar with ticker H$, 4 decimals, and 1000000 initial supply.
-Launch a new HTS token called SkyCredits with ticker SKC, 9 decimal places, and a total supply of 25000.
+Create token GameGold with symbol GG, 2 decimal places, and starting supply of 750000. This is the final supply, don’t set a supply key.
+Launch a new HTS token called SkyCredits with ticker SKC, 9 decimal places, and a total supply of 2500. The supply is fixed.
+Create new HTS token PixelCoin with symbol PXN, 3 decimal places, and 500 tokens minted. I want to control supply changes, so set the supply key.
 ```
 
 ---

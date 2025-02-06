@@ -22,6 +22,11 @@ export class CreateTokenService {
             throw new Error("Missing initial supply of token");
         }
 
+        // not setting supply key by default
+        if (params.isSupplyKey == null) {
+            params.isSupplyKey = false;
+        }
+
         const agentKit = this.hederaProvider.getHederaAgentKit();
 
         const initialSupplyBaseUnit =
@@ -31,7 +36,8 @@ export class CreateTokenService {
             params.name,
             params.symbol,
             params.decimals,
-            initialSupplyBaseUnit
+            initialSupplyBaseUnit,
+            params.isSupplyKey
         );
     }
 }

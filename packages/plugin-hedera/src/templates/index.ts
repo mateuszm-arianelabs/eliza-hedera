@@ -50,6 +50,13 @@ Extract the following information about the token to create on hedera blockchain
    - Extract only the numeric value from the instruction.
    - Specifies the initial supply of fungible tokens to be put in circulation.
 
+5. **Is Supply Key**:
+   - boolean - true or false
+   - defines if account creating the token can mint additional tokens
+   - extract information about the supplyKey from user prompt.
+   - If information is present, set it to true.
+   - If there is no information about supplyKey or it's explicitly said to set it to false in parsed request set it to false!
+
 Always try to extract the information from last message! Do not use previously completed requests data to fill extracted information!
 Respond with a JSON markdown block containing only the extracted values. All fields except 'token' are required:
 \`\`\`json
@@ -57,17 +64,41 @@ Respond with a JSON markdown block containing only the extracted values. All fie
     "name": string,
     "symbol": string,
     "decimals": number,
-    "initialSupply": number
+    "initialSupply": number,
+    "isSupplyKey": boolean,
 }
 \`\`\`
 
-Example reponse for the input: "Create new token with name MyToken with symbol MTK, 8 decimals and 1000 initial supply", the response should be:
+Example response for the input: "Create new token with name MyToken with symbol MTK, 8 decimals and 1000 initial supply", the response should be:
 \`\`\`json
 {
     "name": "MyToken",
     "symbol": "MTK",
     "decimals": 8,
-    "initialSupply": 1000
+    "initialSupply": 1000,
+    "isSupplyKey": false,
+}
+\`\`\`
+
+Example response for the input: "Create new token with name NextToken with symbol NXT, 5 decimals and 1000 initial supply. I want to set the supply key so I could more tokens later.", the response should be:
+\`\`\`json
+{
+    "name": "NextToken",
+    "symbol": "NXT",
+    "decimals": 5,
+    "initialSupply": 1000,
+    "isSupplyKey": true,
+}
+\`\`\`
+
+Example response for the input: "Create new token with name NextToken with symbol NXT, 5 decimals and 1000 initial supply. This is final supply of this token, don't set the supply key.", the response should be:
+\`\`\`json
+{
+    "name": "NextToken",
+    "symbol": "NXT",
+    "decimals": 5,
+    "initialSupply": 1000,
+    "isSupplyKey": false,
 }
 \`\`\`
 
