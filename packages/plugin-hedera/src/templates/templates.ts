@@ -317,3 +317,43 @@ Example response for the input: "I want post to topic 0.0.5423966. Message: test
 
 Now respond with a JSON markdown block containing only the extracted values.
 `;
+
+export const mintTokenTemplate = `Given the recent messages and wallet information below:
+{{recentMessages}}
+{{walletInfo}}
+
+Extract the following information about message to submit to topic request:
+1. **Token Id**:
+   - must be a string. Do not include dot after last character. Example of correct topicId: "0.0.539314".
+
+2. **Amount**:
+   - Must be a number.
+   - amount of tokens that will be minted
+
+Always look at the latest message from user and try to extract data from it!
+Respond with a JSON markdown block containing only the extracted values. All fields are required:
+\`\`\`json
+{
+    "tokenId": string,
+    "amount": string
+}
+\`\`\`
+
+Example response for the input: "Mint 12345 tokens 0.0.5423981", the response should be:
+\`\`\`json
+{
+    "tokenId": "0.0.5423981",
+    "amount": 12345
+}
+\`\`\`
+
+Example response for the input: "Increase supply of token 0.0.5423991 by 100000", the response should be:
+\`\`\`json
+{
+    "tokenId": "0.0.5423991",
+    "amount": 100000
+}
+\`\`\`
+
+Now respond with a JSON markdown block containing only the extracted values.
+`;
