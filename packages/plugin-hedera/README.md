@@ -738,6 +738,140 @@ Create topic with memo: 'test message' and submit key.
 
 ---
 
+### Get Topic Messages
+
+The **Get Topic Messages** action allows fetching messages published to a topic either without filtering or within a specified time range.
+
+This action requires **one mandatory parameter** and supports **two optional parameters**:
+
+- **`TopicId`** *(mandatory)* – The ID of the selected topic.
+- **`lowerThreshold`** *(optional)* – A timestamp in the format `"YYYY-MM-DDTHH:MM:SS.NNNZ"`. If provided, it acts as a **"greater than or equal to"** condition.
+- **`upperThreshold`** *(optional)* – A timestamp in the format `"YYYY-MM-DDTHH:MM:SS.NNNZ"`. If provided, it acts as a **"less than or equal to"** condition.
+
+The `upperThreshold` and `lowerThreshold` parameters can be provided in natural language. The input will be automatically parsed into the required format by the LLM.
+
+If only partial date information is provided (e.g., just the year and month), the LLM will infer the missing details.
+
+**Examples**
+
+- **User input:** `"2nd March 2024"`
+    - **Parsed format:** `"2024-03-02T00:00:00.000Z"`
+- **User input:** `"2nd March 2024 13:50"`
+    - **Parsed format:** `"2024-03-02T13:50:00.000Z"`
+
+
+#### Example Prompts
+
+Below is presented a flow of using Get Topic Messages action
+
+##### Default option
+
+1. User input:
+
+```
+Get messages from topic 0.0.5473710.
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Messages for topic 0.0.5473710:
+-----------------------
+Author: 0.0.5393196
+Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+Timestamp: 2025-02-07T07:36:17.144Z
+-----------------------
+Author: 0.0.5393196
+Body: abcdefgh
+Timestamp: 2025-02-07T07:35:31.000Z
+-----------------------
+Author: 0.0.5393196
+Body: ala ma kota
+Timestamp: 2025-02-07T07:35:06.703Z
+-----------------------
+Author: 0.0.5393196
+Body: testmessage
+Timestamp: 2025-02-05T10:04:05.797Z
+```
+
+##### Option with setting lower threshold
+
+1. User input:
+
+```
+Get messages from topic 0.0.5473710 that were posted after 2025-02-06
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Messages for topic 0.0.5473710:
+-----------------------
+Author: 0.0.5393196
+Body: Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+Timestamp: 2025-02-07T07:36:17.144Z
+-----------------------
+Author: 0.0.5393196
+Body: abcdefgh
+Timestamp: 2025-02-07T07:35:31.000Z
+-----------------------
+Author: 0.0.5393196
+Body: ala ma kota
+Timestamp: 2025-02-07T07:35:06.703Z
+
+
+```
+##### Option with setting full time range:
+1. User input:
+
+```
+Get messages from topic 0.0.5473710 that were posted after 2025-02-06 and before 2025-02-07 07:35:31.000
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Messages for topic 0.0.5473710:
+-----------------------
+Author: 0.0.5393196
+Body: abcdefgh
+Timestamp: 2025-02-07T07:35:31.000Z
+-----------------------
+Author: 0.0.5393196
+Body: ala ma kota
+Timestamp: 2025-02-07T07:35:06.703Z
+
+```
+
+
+Examples of other supported requests for this action:
+```
+Get messages from topic 0.0.5473710 that were posted before 2025-02-07 07:35:31.000.
+Get all posts for topic 0.0.5473710.
+Show messages from topic 0.0.5473710 in range 01.01.2024 - 02.03.2025
+Show messages from topic 0.0.5473710 in range 2022 - 2026.
+```
+
+---
+
 ## Contribution
 
 The plugin is still in development phase. It heavily depends on `hedera-agent-kit` library that is also in during development.
