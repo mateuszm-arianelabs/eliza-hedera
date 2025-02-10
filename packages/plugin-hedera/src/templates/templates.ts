@@ -328,10 +328,13 @@ Using only last message extract the following information about message to submi
 2. **Lower Threshold**:
    - Must be a string.
    - A valid string date format that can be parsed into an unix timestamp.
+   - null if not provided
 3. **Upper Threshold**:
    - Must be a string.
    - A valid string date format that can be parsed into an unix timestamp.
+   - null if not provided
 
+Must not use information from user messages other than the last one!
 Extract information from user prompt and create from them strings in format ex. "2025-02-05T14:57:35.123Z".
 Fill the lacking information. For example if user gave only year and month ex. 2020.03 create valid string "2020-03-01T00:00:00.000Z".
 If only year was given consider ex. 2002 consider it "2002-01-01T00:00:00.000Z".
@@ -339,7 +342,7 @@ Sort the timestamps to assign the higher one to upperThreshold and lower to lowe
 Thresholds are optional! If not provided at all pass null values to returned JSON.
 
 Always look at the latest message from user and try to extract data from it!
-Respond with a JSON markdown block containing only the extracted values. topicId is required:
+Respond with a JSON markdown block containing only the extracted values. Only topicId is not nullable:
 \`\`\`json
 {
     "topicId": string,

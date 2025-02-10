@@ -83,8 +83,10 @@ export const getTopicMessagesAction = {
                     formatedText += `-----------------------\nAuthor: ${hcsMessage.payer_account_id}\nBody: ${hcsMessage.message}\nTimestamp: ${convertTimestampToUTC(hcsMessage.consensus_timestamp)}\n`;
                 });
 
+                const dateRangeText = `between ${paramOptions.lowerThreshold ? paramOptions.lowerThreshold : "topic creation"} and ${paramOptions.upperThreshold ? paramOptions.upperThreshold : "this moment"}`;
+
                 await callback({
-                    text: `Messages for topic ${paramOptions.topicId}:\n${formatedText}`,
+                    text: `Messages for topic ${paramOptions.topicId} posted ${dateRangeText}:\n${formatedText}`,
                 });
             }
 

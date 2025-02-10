@@ -908,9 +908,13 @@ Examples of other supported requests for this action:
 ```
 Get messages from topic 0.0.5473710 that were posted before 2025-02-07 07:35:31.000.
 Get all posts for topic 0.0.5473710.
+Show messages from topic 0.0.5473710. No date range set.
 Show messages from topic 0.0.5473710 in range 01.01.2024 - 02.03.2025
 Show messages from topic 0.0.5473710 in range 2022 - 2026.
 ```
+
+**Note:** sometimes LLMs struggles with proper extracting of data from requests. It might happen if first request with specific data range was passed and then next prompt request for all posts (no data range therefore no params) is issued. 
+In this case you might need to be more specific and use prompt `Show messages from topic 0.0.5473710. No time range.` instead of `Show messages from topic 0.0.5473710.`.
 
 ---
 
