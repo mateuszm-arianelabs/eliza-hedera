@@ -144,7 +144,7 @@ Calling relevant action to retrieve token balance. Please wait...
 3. Action's callback response:
 
 ```
-Address 0.0.5446063 has balance of 10000000 USD Bar (token id: 0.0.5446064)
+Address 0.0.5446063 has balance of token USD Bar equal 10000000 USDB (token id: 0.0.5446064)
 ```
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. `0.0.5423981`).
 

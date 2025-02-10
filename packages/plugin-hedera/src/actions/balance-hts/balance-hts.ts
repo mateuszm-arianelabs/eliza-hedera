@@ -71,7 +71,7 @@ export const balanceHtsAction = {
 
             if (callback && response.status === TxStatus.SUCCESS) {
                 await callback({
-                    text: `Address ${paramOptions.address} has balance of ${response.balance} ${response.unit} (token id: ${paramOptions.tokenId})`,
+                    text: `Address ${paramOptions.address} has balance of token ${response.unit} equal ${response.balance} ${response.symbol} (token id: ${paramOptions.tokenId})`,
                     content: {
                         success: true,
                         amount: response.balance,

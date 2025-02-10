@@ -34,6 +34,7 @@ export class HtsBalanceActionService {
                 networkType
             ).then((b) => b.toString()),
             unit: tokenDetails.name,
+            symbol: tokenDetails.symbol,
         };
     }
 }
