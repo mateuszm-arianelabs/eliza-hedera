@@ -1059,12 +1059,10 @@ Note that this action takes one mandatory parameter:
 
 Below is presented a flow of using Delete Topic action
 
-##### Default option
-
 1. User input:
 
 ```
-Delete Topic with id .
+Delete Topic with id 0.0.5500697.
 ```
 
 2. LLM response - action execution:
@@ -1076,42 +1074,15 @@ Calling relevant action. Please wait...
 3. Action's callback response:
 
 ```
-Successfully created topic: 0.0.5474228.
-Transaction link: https://hashscan.io/testnet/tx/0.0.5393196@1738758485.524585936
+Successfully deleted topic 0.0.5500697.
+Transaction link: https://hashscan.io/testnet/tx/0.0.4515756@1739281029.698340079
 ```
-##### Option with requesting setting submitKey of topic to be created:
-1. User input:
-
-```
-Create topic with memo: test. Please set submit key.
-```
-
-2. LLM response - action execution:
-
-```
-Calling relevant action. Please wait...
-```
-
-3. Action's callback response:
-
-```
-Successfully created topic: 0.0.5474249.
-Transaction link: https://hashscan.io/testnet/tx/0.0.5393196@1738758985.176879241
-```
-
-
 
 Examples of other supported requests for this action:
 ```
-Create topic with memo: 'test message'. Please do not set submit key.
-Create topic with memo test message.
-Create topic with memo: test message.
-Create topic with memo: test message.
-Create topic with memo: test message. I want posting to it to be guarded.
-Create topic with memo: 'test message' and submit key.
+Create topic 0.0.5500697.
+Remove topic 0.0.5500697.
 ```
-
-**Note:** the topic will be secured with key for an account that the agent is using.
 
 ---
 
