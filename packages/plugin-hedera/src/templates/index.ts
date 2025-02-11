@@ -158,7 +158,7 @@ Now respond with a JSON markdown block containing only the extracted values.
 export const pendingAirdropTemplate = `Given the recent messages and wallet information below:
 {{recentMessages}}
 {{walletInfo}}
-If in message there is no accountId or some think that looks similar to accountId for example: "0.0.5422268", return this json.
+If in message there is no accountId or anything that looks similar to accountId for example: "0.0.5422268", return this json.
 \`\`\`json
 {
     "accountId": null
@@ -167,9 +167,9 @@ If in message there is no accountId or some think that looks similar to accountI
 If message include accountId for example "0.0.5422268" extract this data with following instructions.
 1. **Account Id**
     - Account Id should look like "0.0.5422268" and should be a string.
-    - Account Id as string cant have other chars than numbers 0 to 9 and dots.
-    - Dots cant start accountId string or end, there is always number on start and end.
-    - If you cant find accountId returns structure with account id equast null.
+    - Account Id as string can't have other chars than numbers 0 to 9 and dots.
+    - Dots can neither start nor end accountId, there is always a number on the start and on the end.
+    - If you cant find accountId return structure with account id equall null.
     - Example account ids are "0.0.5422268", "0.0.4515756"
 
 Respond with a JSON markdown block containing only the extracted values. accountId:
@@ -220,7 +220,7 @@ Extract data of pending token airdrop from message with following instructions.
     - Dots can't start senderId string or end, there is always a number on the start and end.
     - Example sender ids are "0.0.5422268", "0.0.4515756"
 
-3. **Token Id**
+2. **Token Id**
     - Token Id should looks like "0.0.5422268" and should be string.
     - Token Id as string cant have other chars than numbers 0 to 9 and dots.
     - Dots can't start tokenId string or end, there is always a number on the start and end.

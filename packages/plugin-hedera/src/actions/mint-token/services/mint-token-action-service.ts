@@ -3,7 +3,7 @@ import { HederaAgentKit } from "hedera-agent-kit";
 import { MintTokenResult } from "hedera-agent-kit/src/types";
 import { HederaMintTokenParams } from "../types.ts";
 import { TokenId } from "@hashgraph/sdk";
-import { toBaseUnit } from "hedera-agent-kit/src/utils/hts-format-utils";
+import { toBaseUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
 import { HederaNetworkType } from "hedera-agent-kit/src/types";
 
 export class MintTokenActionService {
