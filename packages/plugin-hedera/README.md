@@ -899,14 +899,18 @@ Calling relevant action. Please wait...
 3. Action's callback response:
 
 ```
-Topic with id: 0.0.5499850 deleted successfully.
+Topic with id: 0.0.5499850 created successfully.
 Transaction link: https://hashscan.io/testnet/tx/0.0.5393196@1738758985.176879241
 ```
 
 Examples of other supported requests for this action:
 ```
-Delete topic 0.0.5499850.
-Remove topic with id 0.0.5499850.
+Create topic with memo: 'test message'. Please do not set submit key.
+Create topic with memo test message.
+Create topic with memo: test message.
+Create topic with memo: test message.
+Create topic with memo: test message. I want posting to it to be guarded.
+Create topic with memo: 'test message' and submit key.
 ```
 
 ---
@@ -1080,8 +1084,12 @@ Transaction link: https://hashscan.io/testnet/tx/0.0.4515756@1739281029.69834007
 
 Examples of other supported requests for this action:
 ```
-Create topic 0.0.5500697.
-Remove topic 0.0.5500697.
+Create topic with memo: 'test message'. Please do not set submit key.
+Create topic with memo test message.
+Create topic with memo: test message.
+Create topic with memo: test message.
+Create topic with memo: test message. I want posting to it to be guarded.
+Create topic with memo: 'test message' and submit key.
 ```
 
 ---
