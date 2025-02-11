@@ -25,20 +25,20 @@ export class TopicInfoActionService {
             networkType
         );
 
-        const adminKey = topicInfo.admin_key.key
+        const adminKey = topicInfo?.admin_key?.key
             ? `${topicInfo.admin_key.key}\n   type: ${topicInfo.admin_key._type}`
             : `not available`;
-        const submitKey = topicInfo.submit_key.key
+        const submitKey = topicInfo?.submit_key?.key
             ? `${topicInfo.submit_key.key}\n   type: ${topicInfo.submit_key._type}`
             : `not available`;
         const creationTimeUtc = convertTimestampToUTC(
             topicInfo.created_timestamp
         );
-        const expirationTimeUtc = topicInfo.created_timestamp
-            ? convertTimestampToUTC(topicInfo.created_timestamp)
+        const expirationTimeUtc = topicInfo?.timestamp?.to
+            ? convertTimestampToUTC(topicInfo.timestamp.to)
             : "null";
 
-        const memo = topicInfo.memo ? topicInfo.memo : `not available`;
+        const memo = topicInfo?.memo ? topicInfo.memo : `not available`;
 
         return [
             "--------------------------------------",
