@@ -1,10 +1,10 @@
 import { HederaProvider } from "../../../providers/client";
 import { HederaAgentKit } from "hedera-agent-kit";
-import { MintTokenResult } from "hedera-agent-kit/dist/types";
+import { MintTokenResult } from "hedera-agent-kit/src/types";
 import { HederaMintTokenParams } from "../types.ts";
 import { TokenId } from "@hashgraph/sdk";
-import { toBaseUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
-import { HederaNetworkType } from "../../../shared/types.ts";
+import { toBaseUnit } from "hedera-agent-kit/src/utils/hts-format-utils";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 
 export class MintTokenActionService {
     constructor(private hederaProvider: HederaProvider) {

@@ -5,8 +5,8 @@ import {
     HederaNetworkType,
     HtsTokenDetails,
     TokenBalance,
-} from "hedera-agent-kit/dist/types";
-import { toBaseUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
+} from "hedera-agent-kit/src/types";
+import { toBaseUnit } from "hedera-agent-kit/src/utils/hts-format-utils";
 import { TxStatus } from "../../../shared/constants.ts";
 
 export class TokenHoldersActionService {

@@ -1,7 +1,7 @@
 import { HederaProvider } from "../../../providers/client";
 import { HederaAgentKit } from "hedera-agent-kit";
 import { HederaDissociateTokenParams } from "../types.ts";
-import { AssociateTokenResult } from "hedera-agent-kit/dist/types";
+import { AssociateTokenResult } from "hedera-agent-kit/src/types";
 import { TokenId } from "@hashgraph/sdk";
 
 export class DissociateTokenActionService {

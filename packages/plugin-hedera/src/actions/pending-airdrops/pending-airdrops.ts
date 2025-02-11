@@ -10,7 +10,7 @@ import {
     State,
 } from "@elizaos/core";
 import { HederaProvider } from "../../providers/client";
-import { HederaNetworkType } from "../../shared/types.ts";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 import { pendingAirdropTemplate } from "../../templates";
 import { pendingAirdropsParams } from "./schema.ts";
 import { GetPendingAirdropsService } from "./services/get-pending-airdrops.ts";

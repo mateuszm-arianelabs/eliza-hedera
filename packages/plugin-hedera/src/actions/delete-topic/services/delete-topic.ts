@@ -13,6 +13,8 @@ export class DeleteTopicService {
         const agentKit = this.hederaProvider.getHederaAgentKit();
         const topicId = TopicId.fromString(params.topicId);
 
+        // TODO: Refactor!
+
         return agentKit.deleteTopic(topicId);
     }
 }

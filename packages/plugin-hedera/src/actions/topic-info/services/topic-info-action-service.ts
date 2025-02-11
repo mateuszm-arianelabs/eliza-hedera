@@ -2,8 +2,8 @@ import { HederaProvider } from "../../../providers/client";
 import { HederaAgentKit } from "hedera-agent-kit";
 import { HederaTopicInfoParams } from "../types.ts";
 import { TopicId } from "@hashgraph/sdk";
-import { HederaNetworkType } from "../../../shared/types.ts";
-import { TopicInfoApiResponse } from "hedera-agent-kit/dist/types";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
+import { TopicInfoApiResponse } from "hedera-agent-kit/src/types";
 import { convertTimestampToUTC } from "../../../shared/utils.ts";
 
 export class TopicInfoActionService {

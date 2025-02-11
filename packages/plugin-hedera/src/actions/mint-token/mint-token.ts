@@ -9,14 +9,14 @@ import {
     State,
 } from "@elizaos/core";
 import { HederaProvider } from "../../providers/client";
-import { mintTokenTemplate } from "../../templates/templates.ts";
 import { MintTokenActionService } from "./services/mint-token-action-service.ts";
 import { HederaMintTokenParams } from "./types.ts";
-import { HederaNetworkType } from "../../shared/types.ts";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 import { TxStatus } from "../../shared/constants.ts";
-import { SubmitMessageResult } from "hedera-agent-kit/dist/types";
+import { MintTokenResult } from "hedera-agent-kit/src/types";
 import { generateHashscanUrl } from "../../shared/utils.ts";
 import { hederaMintTokenParamsSchema } from "./schema.ts";
+import { mintTokenTemplate } from "../../templates";
 
 export const mintTokenAction = {
     name: "HEDERA_MINT_TOKEN",
@@ -70,7 +70,7 @@ export const mintTokenAction = {
 
             const action = new MintTokenActionService(hederaProvider);
 
-            const response: SubmitMessageResult = await action.execute(
+            const response: MintTokenResult = await action.execute(
                 paramOptions,
                 networkType
             );

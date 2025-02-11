@@ -14,10 +14,10 @@ import {
 } from "./types";
 import { hederaAllTokensBalancesParamsSchema } from "./schema.ts";
 import { HederaProvider } from "../../providers/client";
-import { balancesAllTokensTemplate } from "../../templates/templates.ts";
 import { AllTokensBalancesActionService } from "./services/all-tokens-balances-action-service.ts";
-import { HederaNetworkType } from "hedera-agent-kit/dist/types";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 import { TxStatus } from "../../shared/constants.ts";
+import { balancesAllTokensTemplate } from "../../templates";
 
 export const balancesAllTokensAction = {
     name: "HEDERA_ALL_BALANCES",

@@ -11,12 +11,12 @@ import {
 
 import { HederaProvider } from "../../providers/client";
 import { DissociateTokenActionService } from "./service/dissociate-token-action-service.ts";
-import { dissociateTokenTemplate } from "../../templates/templates.ts";
 import { TxStatus } from "../../shared/constants.ts";
 import { hederaDissociateTokenParamsSchema } from "./schema.ts";
 import { HederaDissociateTokenParams } from "./types.ts";
-import { HederaNetworkType } from "../../shared/types.ts";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 import { generateHashscanUrl } from "../../shared/utils.ts";
+import { dissociateTokenTemplate } from "../../templates";
 
 export const dissociateTokenAction = {
     name: "HEDERA_DISSOCIATE_TOKEN",

@@ -10,11 +10,11 @@ import {
 } from "@elizaos/core";
 import { hederaHtsBalanceParamsSchema } from "./schema.ts";
 import { HederaProvider } from "../../providers/client";
-import { balanceHtsTemplate } from "../../templates/templates.ts";
 import { HtsBalanceActionService } from "./services/hts-balance-action-service.ts";
 import { HederaHtsBalanceParams, IHtsBalanceResponse } from "./types.ts";
-import { HederaNetworkType } from "../../shared/types.ts";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 import { TxStatus } from "../../shared/constants.ts";
+import { balanceHtsTemplate } from "../../templates";
 
 export const balanceHtsAction = {
     name: "HEDERA_HTS_BALANCE",

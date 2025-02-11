@@ -9,16 +9,13 @@ import {
     State,
 } from "@elizaos/core";
 import { HederaProvider } from "../../providers/client";
-import {
-    getTopicMessagesTemplate,
-    submitTopicMessageTemplate,
-} from "../../templates/templates.ts";
 import { HederaGetTopicMessagesParams } from "./types.ts";
-import { HederaNetworkType } from "../../shared/types.ts";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 import { TxStatus } from "../../shared/constants.ts";
 import { convertTimestampToUTC } from "../../shared/utils.ts";
 import { hederaGetTopicMessagesParamsSchema } from "./schema.ts";
 import { GetTopicMessageActionService } from "./services/get-topic-messages-action-service.ts";
+import { getTopicMessagesTemplate } from "../../templates";
 
 export const getTopicMessagesAction = {
     name: "HEDERA_GET_TOPIC_MESSAGES",
@@ -103,7 +100,7 @@ export const getTopicMessagesAction = {
             return false;
         }
     },
-    template: submitTopicMessageTemplate,
+    template: getTopicMessagesTemplate,
     validate: async (runtime: IAgentRuntime) => {
         const privateKey = runtime.getSetting("HEDERA_PRIVATE_KEY");
         const accountAddress = runtime.getSetting("HEDERA_ACCOUNT_ID");

@@ -9,11 +9,11 @@ import {
     State,
 } from "@elizaos/core";
 import { HederaProvider } from "../../providers/client";
-import { topicInfoTemplate } from "../../templates/templates.ts";
-import { HederaNetworkType } from "hedera-agent-kit/dist/types";
 import { HederaTopicInfoParams } from "./types.ts";
 import { TopicInfoActionService } from "./services/topic-info-action-service.ts";
 import { hederaTopicInfoParamsSchema } from "./schema.ts";
+import { topicInfoTemplate } from "../../templates";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 
 export const topicInfoAction = {
     name: "HEDERA_TOPIC_INFO",

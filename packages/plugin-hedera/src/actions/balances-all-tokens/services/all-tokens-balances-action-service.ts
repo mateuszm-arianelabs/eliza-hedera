@@ -7,7 +7,7 @@ import {
 import {
     DetailedTokenBalance,
     HederaNetworkType,
-} from "hedera-agent-kit/dist/types";
+} from "hedera-agent-kit/src/types";
 import { TxStatus } from "../../../shared/constants.ts";
 
 export class AllTokensBalancesActionService {
