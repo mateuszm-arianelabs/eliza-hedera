@@ -2,7 +2,7 @@ import type { HederaHtsBalanceParams } from "../types.ts";
 import { HederaProvider } from "../../../providers/client";
 import { HederaAgentKit } from "hedera-agent-kit";
 import { TokenId } from "@hashgraph/sdk";
-import { RejectTokenResult } from "hedera-agent-kit/dist/types";
+import { RejectTokenResult } from "hedera-agent-kit/src/types";
 
 export class RejectTokenActionService {
     constructor(private hederaProvider: HederaProvider) {

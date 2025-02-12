@@ -1,6 +1,6 @@
 import { CreateTokenParams } from "../types.ts";
 import { HederaProvider } from "../../../providers/client";
-import { CreateTokenResult } from "hedera-agent-kit/dist/types";
+import { CreateTokenResult } from "hedera-agent-kit/src/types";
 
 export class CreateTokenService {
     constructor(private hederaProvider: HederaProvider) {}

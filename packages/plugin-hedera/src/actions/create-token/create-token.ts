@@ -14,7 +14,7 @@ import { HederaProvider } from "../../providers/client";
 import { CreateTokenService } from "./services/create-token.ts";
 import { createTokenParamsSchema } from "./schema.ts";
 import { generateHashscanUrl } from "../../shared/utils.ts";
-import { HederaNetworkType } from "../../shared/types.ts";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 import { TxStatus } from "../../shared/constants.ts";
 
 export const createTokenAction: Action = {

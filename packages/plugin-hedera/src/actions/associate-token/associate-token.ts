@@ -13,10 +13,10 @@ import { HederaProvider } from "../../providers/client";
 import { HederaAssociateTokenParams } from "./types.ts";
 import { hederaAssociateTokenParamsSchema } from "./schema.ts";
 import { AssociateTokenActionService } from "./service/associate-token-action-service.ts";
-import { associateTokenTemplate } from "../../templates/templates.ts";
 import { TxStatus } from "../../shared/constants.ts";
-import { HederaNetworkType } from "../../shared/types.ts";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 import { generateHashscanUrl } from "../../shared/utils.ts";
+import { associateTokenTemplate } from "../../templates";
 
 export const associateTokenAction = {
     name: "HEDERA_ASSOCIATE_TOKEN",

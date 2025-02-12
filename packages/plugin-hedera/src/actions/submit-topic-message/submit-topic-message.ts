@@ -9,14 +9,14 @@ import {
     State,
 } from "@elizaos/core";
 import { HederaProvider } from "../../providers/client";
-import { submitTopicMessageTemplate } from "../../templates/templates.ts";
 import { SubmitTopicMessageActionService } from "./services/submit-topic-message-action-service.ts";
 import { HederaSubmitTopicMessageParams } from "./types.ts";
-import { HederaNetworkType } from "../../shared/types.ts";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 import { TxStatus } from "../../shared/constants.ts";
-import { SubmitMessageResult } from "hedera-agent-kit/dist/types";
+import { SubmitMessageResult } from "hedera-agent-kit/src/types";
 import { generateHashscanUrl } from "../../shared/utils.ts";
 import { hederaSubmitTopicMessageParamsSchema } from "./schema.ts";
+import { submitTopicMessageTemplate } from "../../templates";
 
 export const submitTopicMessageAction = {
     name: "HEDERA_SUBMIT_TOPIC_MESSAGE",

@@ -1,6 +1,6 @@
 import type { HederaHtsBalanceParams, IHtsBalanceResponse } from "../types.ts";
 import { HederaProvider } from "../../../providers/client";
-import { HederaNetworkType } from "../../../shared/types.ts";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 import { HederaAgentKit } from "hedera-agent-kit";
 import { toDisplayUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
 import { TxStatus } from "../../../shared/constants.ts";
@@ -34,6 +34,7 @@ export class HtsBalanceActionService {
                 networkType
             ).then((b) => b.toString()),
             unit: tokenDetails.name,
+            symbol: tokenDetails.symbol,
         };
     }
 }

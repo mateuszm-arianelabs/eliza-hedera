@@ -5,7 +5,7 @@ import {
     HederaGetTopicMessagesParams,
 } from "../types.ts";
 import { TopicId } from "@hashgraph/sdk";
-import { HederaNetworkType } from "../../../shared/types.ts";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 import { convertStringToTimestamp } from "../../../shared/utils.ts";
 import { TxStatus } from "../../../shared/constants.ts";
 

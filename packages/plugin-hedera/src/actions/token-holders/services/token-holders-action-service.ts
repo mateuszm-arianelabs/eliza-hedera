@@ -5,7 +5,7 @@ import {
     HederaNetworkType,
     HtsTokenDetails,
     TokenBalance,
-} from "hedera-agent-kit/dist/types";
+} from "hedera-agent-kit/src/types";
 import { toBaseUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
 import { TxStatus } from "../../../shared/constants.ts";
 

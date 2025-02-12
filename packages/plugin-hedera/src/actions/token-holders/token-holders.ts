@@ -9,13 +9,13 @@ import {
     State,
 } from "@elizaos/core";
 import { HederaProvider } from "../../providers/client";
-import { tokenHoldersTemplate } from "../../templates/templates.ts";
-import { HederaNetworkType } from "hedera-agent-kit/dist/types";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 import { HederaTokenHoldersParams, TokenHoldersResult } from "./types.ts";
 import { hederaTokenHoldersParamsSchema } from "./schema.ts";
 import { TokenHoldersActionService } from "./services/token-holders-action-service.ts";
 import { toDisplayUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
 import { TxStatus } from "../../shared/constants.ts";
+import { tokenHoldersTemplate } from "../../templates";
 
 export const tokenHoldersAction = {
     name: "HEDERA_TOKEN_HOLDERS",

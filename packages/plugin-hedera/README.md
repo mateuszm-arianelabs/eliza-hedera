@@ -144,7 +144,7 @@ Calling relevant action to retrieve token balance. Please wait...
 3. Action's callback response:
 
 ```
-Address 0.0.5446063 has balance of 10000000 USD Bar (token id: 0.0.5446064)
+Address 0.0.5446063 has balance of token USD Bar equal 10000000 USDB (token id: 0.0.5446064)
 ```
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. `0.0.5423981`).
 
@@ -384,12 +384,12 @@ Create new HTS token PixelCoin with symbol PXN, 3 decimal places, and 500 tokens
 
 ---
 
-### Airdrop token
+### Airdrop Token
 
-Create token action allows to create a new fungible token on the Hedera network.
+Airdrop Token action allows to airdrop tokens to up to 10 accounts.
 Note that this action takes three mandatory parameters:
 - **Token id** - id token to airdrop
-- **amount** - amount of token in given in {denom format?? Implementation should be later changed to accept display unit format}
+- **amount** - amount of token in given in display format
 - **recipients** - array of account ids of recipients
 
 #### Example Prompts
@@ -422,6 +422,106 @@ Make airdrop of 2 tokens 0.0.5450643 to multiple wallets: 0.0.5392887, 0.0.53930
 Send token airdrop of 2 tokens 0.0.5450643 to wallets: 0.0.5392887, 0.0.5393076, 0.0.4515756.
 Airdrop token 0.0.5450643 to wallets: 0.0.5392887, 0.0.5393076, 0.0.4515756. Amount: 2.
 ```
+---
+
+### Show Pending Airdrops
+
+Show Pending Airdrops allows to fetch pending airdrops for an account.
+Note that this action takes one optional parameter
+- **Account Id** - id of account for which the fetch should be performed, if not passed defaults to agents wallet
+
+#### Example Prompts
+
+Below is presented a flow of using Show Pending Airdrops action
+
+**With default value of agents wallet**
+1. User input:
+
+```
+Show me pending airdrops
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Here are pending airdrops for account 0.0.4515756 
+
+(1) 100 KLR (token id: 0.0.5450181) from 0.0.5393196
+(2) 0.0006 H$ (token id: 0.0.5450643) from 0.0.5393196
+```
+
+**With passing target account id**
+1. User input:
+
+```
+Show pending airdrops for the account with id 0.0.5499883
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+There are no pending airdrops for accountId 0.0.5499883.
+```
+
+Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
+
+Examples of other supported requests for this action:
+```
+Show your pending airdrops.
+Show pending airdrops for the account with id 0.0.5499883
+```
+---
+
+### Claim Airdrop
+
+Claim Airdrop action allows claiming pending airdrop for the account connected with agent.
+Note that this action takes two mandatory parameters:
+- **Token id** - id of airdropped token
+- **Account id** - id of account that airdropped the token
+
+#### Example Prompts
+
+Below is presented a flow of using Airdrop Token action
+
+1. User input:
+
+```
+Claim airdrop 0.0006 H$ (token id: 0.0.5450643) from 0.0.5393196
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Successfully claimed airdrop for token 0.0.5450643.
+Transaction link: https://hashscan.io/testnet/tx/0.0.4515756@1739271766.985013990
+```
+
+Examples of other supported requests for this action:
+```
+Accept airdrop of token 0.0.5450181 from account 0.0.5393196
+Accept airdrop from account 0.0.5393196 containing token 0.0.5450181.
+```
+
+**Note:** the data about the airdrop passed to the function might be taken from the result of usage of `Show Pending Airdrops` action.
+
 ---
 
 ### Mint Token
@@ -464,7 +564,6 @@ increase supply of token 0.0.5478757 by 9999
 ```
 
 ---
-
 
 ### Reject Token
 
@@ -598,7 +697,7 @@ Below is presented a flow of using Transfer HBAR action
 1. User input:
 
 ```
-Transfer 100 HBAR to 0.0.5392887.
+Transfer 10 HBAR to account 0.0.5499760 
 ```
 
 2. LLM response - action execution:
@@ -610,7 +709,8 @@ Calling relevant action. Please wait...
 3. Action's callback response:
 
 ```
-HBAR transfer successfully. 0.0.5393196@1738317322.326410854
+Transfer of 10 HBAR to 0.0.5499760 completed.
+Transaction link: https://hashscan.io/testnet/tx/0.0.5393196@1739269481.061926306
 ```
 
 Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
@@ -623,6 +723,46 @@ Transfer exactly 1.1 HBAR to 0.0.5392887.
 ```
 
 ---
+
+### Transfer HTS Token
+
+Transfer HTS Token action allows to transfer selected HTS token from connected account to given account.
+Note that this action takes three mandatory parameters:
+- **Amount** - amount of HTS token to transfer (given in display unit)
+- **Recipient AccountId** - address of wallet to receive the tokens
+- **Token Id** - id of token to transfer
+
+#### Example Prompts
+
+Below is presented a flow of using Transfer HTS Token action
+
+1. User input:
+
+```
+Transfer 10 of 0.0.5450643 to account 0.0.5499760 
+```
+
+2. LLM response - action execution:
+
+```
+I'll help you transfer 10 tokens from 0.0.5450643 to account 0.0.5499760.
+```
+
+3. Action's callback response:
+
+```
+Transfer of token 0.0.5450643 to 0.0.5499760 completed.
+Transaction link: https://hashscan.io/testnet/tx/0.0.5393196@1739269394.302994738
+```
+
+Currently, EVM wallet addresses are **not supported.** Please pass Hedera addresses (ex. 0.0.5423981).
+
+Examples of other supported requests for this action:
+```
+Make a transaction of 4 tokens with id 0.0.5450643 to 0.0.5392887.
+Send 1 token 0.0.5450643 to account 0.0.5392887.
+Transfer exactly 1.1 token 0.0.5450643 to 0.0.5392887.
+```
 
 ### Get Topic Info
 
@@ -712,11 +852,10 @@ you can post only to topics without submitKey or with submitKey form account tha
 
 ---
 
-
 ### Create Topic
 
 Create Topic action allows to create a new topic.
-Note that this action takes two mandatory parameter:
+Note that this action takes two mandatory parameters:
 - **memo** - short, string describing topic
 - **isSubmitKey** - boolean, decides whether submitting messages to topic should be protected by submitKey 
 
@@ -760,11 +899,9 @@ Calling relevant action. Please wait...
 3. Action's callback response:
 
 ```
-Successfully created topic: 0.0.5474249.
+Topic with id: 0.0.5499850 created successfully.
 Transaction link: https://hashscan.io/testnet/tx/0.0.5393196@1738758985.176879241
 ```
-
-
 
 Examples of other supported requests for this action:
 ```
@@ -775,8 +912,6 @@ Create topic with memo: test message.
 Create topic with memo: test message. I want posting to it to be guarded.
 Create topic with memo: 'test message' and submit key.
 ```
-
-**Note:** the topic will be secured with key for an account that the agent is using.
 
 ---
 
@@ -908,8 +1043,53 @@ Examples of other supported requests for this action:
 ```
 Get messages from topic 0.0.5473710 that were posted before 2025-02-07 07:35:31.000.
 Get all posts for topic 0.0.5473710.
+Show messages from topic 0.0.5473710. No date range set.
 Show messages from topic 0.0.5473710 in range 01.01.2024 - 02.03.2025
 Show messages from topic 0.0.5473710 in range 2022 - 2026.
+```
+
+**Note:** sometimes LLMs struggles with proper extracting of data from requests. It might happen if first request with specific data range was passed and then next prompt request for all posts (no data range therefore no params) is issued. 
+In this case you might need to be more specific and use prompt `Show messages from topic 0.0.5473710. No time range.` instead of `Show messages from topic 0.0.5473710.`.
+
+---
+
+### Delete Topic
+
+Delete Topic action allows to delete an existing topic.
+Note that this action takes one mandatory parameter:
+- **isSubmitKey** - boolean, decides whether submitting messages to topic should be protected by submitKey
+
+#### Example Prompts
+
+Below is presented a flow of using Delete Topic action
+
+1. User input:
+
+```
+Delete Topic with id 0.0.5500697.
+```
+
+2. LLM response - action execution:
+
+```
+Calling relevant action. Please wait...
+```
+
+3. Action's callback response:
+
+```
+Successfully deleted topic 0.0.5500697.
+Transaction link: https://hashscan.io/testnet/tx/0.0.4515756@1739281029.698340079
+```
+
+Examples of other supported requests for this action:
+```
+Create topic with memo: 'test message'. Please do not set submit key.
+Create topic with memo test message.
+Create topic with memo: test message.
+Create topic with memo: test message.
+Create topic with memo: test message. I want posting to it to be guarded.
+Create topic with memo: 'test message' and submit key.
 ```
 
 ---

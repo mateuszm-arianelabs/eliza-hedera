@@ -14,7 +14,7 @@ import { HederaProvider } from "../../providers/client";
 import { TransferHbarService } from "./services/transfer-hbar.ts";
 import { transferDataParamsSchema } from "./schema.ts";
 import { generateHashscanUrl } from "../../shared/utils.ts";
-import { HederaNetworkType } from "../../shared/types.ts";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 
 export const transferAction: Action = {
     name: "TRANSFER_HBAR",

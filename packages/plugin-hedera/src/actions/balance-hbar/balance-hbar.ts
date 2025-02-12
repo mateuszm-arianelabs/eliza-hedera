@@ -12,8 +12,8 @@ import type { HederaHbarBalanceParams, IHbarBalanceResponse } from "./types";
 import { hederaHbarBalanceParamsSchema } from "./schema.ts";
 import { HederaProvider } from "../../providers/client";
 import { HbarBalanceActionService } from "./services/hbar-balance-action-service.ts";
-import { balanceHbarTemplate } from "../../templates/templates.ts";
 import { TxStatus } from "../../shared/constants.ts";
+import { balanceHbarTemplate } from "../../templates";
 
 export const balanceHbarAction = {
     name: "HEDERA_HBAR_BALANCE",

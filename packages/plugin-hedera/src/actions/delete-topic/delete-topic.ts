@@ -13,6 +13,9 @@ import { hederaDeleteTopicTemplate } from "../../templates";
 import { HederaProvider } from "../../providers/client";
 import { deleteTopicParamsSchema } from "./schema.ts";
 import { DeleteTopicService } from "./services/delete-topic.ts";
+import { TxStatus } from "../../shared/constants.ts";
+import { generateHashscanUrl } from "../../shared/utils.ts";
+import { HederaNetworkType } from "hedera-agent-kit/src/types";
 
 export const deleteTopicAction: Action = {
     name: "HEDERA_DELETE_TOPIC",
@@ -41,14 +44,20 @@ export const deleteTopicAction: Action = {
                 deleteTopicParamsSchema.parse(deleteTopicContent);
 
             const hederaProvider = new HederaProvider(runtime);
+            const networkType = runtime.getSetting(
+                "HEDERA_NETWORK_TYPE"
+            ) as HederaNetworkType;
+
             const action = new DeleteTopicService(hederaProvider);
 
-            await action.execute(deleteTopicData);
+            const response = await action.execute(deleteTopicData);
 
-            await callback({
-                text: `Topic with id: ${deleteTopicData.topicId} deleted successfully.`,
-                context: { deletedTopicId: deleteTopicData.topicId },
-            });
+            if (callback && response.status === TxStatus.SUCCESS) {
+                const url = generateHashscanUrl(response.txHash, networkType);
+                await callback({
+                    text: `Successfully deleted topic ${deleteTopicData.topicId}.\nTransaction link: ${url}`,
+                });
+            }
 
             return true;
         } catch (error) {

@@ -1,6 +1,6 @@
 import { HederaProvider } from "../../../providers/client";
 import { HederaAgentKit } from "hedera-agent-kit";
-import { SubmitMessageResult } from "hedera-agent-kit/dist/types";
+import { SubmitMessageResult } from "hedera-agent-kit/src/types";
 import { HederaSubmitTopicMessageParams } from "../types.ts";
 import { TopicId } from "@hashgraph/sdk";
 

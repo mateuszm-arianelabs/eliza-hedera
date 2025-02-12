@@ -1,9 +1,8 @@
 import { HederaProvider } from "../../../providers/client";
 import { AirdropRecipient, AirdropTokenParams } from "../types.ts";
 import { TokenId } from "@hashgraph/sdk";
-import { AirdropResult } from "hedera-agent-kit/dist/types";
+import { AirdropResult, HederaNetworkType } from "hedera-agent-kit/src/types";
 import { toBaseUnit } from "hedera-agent-kit/dist/utils/hts-format-utils";
-import { HederaNetworkType } from "../../../shared/types.ts";
 
 export class AirdropTokenService {
     constructor(private hederaProvider: HederaProvider) {}

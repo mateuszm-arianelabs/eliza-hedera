@@ -10,6 +10,7 @@ export type IHtsBalanceResponse = {
     status: TxStatus.SUCCESS;
     balance: string;
     unit: string;
+    symbol: string;
 };
 
 export type TokenBalance = {
